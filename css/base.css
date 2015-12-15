@@ -1,0 +1,86 @@
+
+html,
+body,
+/*div.background*/
+{    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+height: 100%; 
+background: #EDEDED;
+}
+ 
+/*div.background {
+min-height: 100%; 
+}
+ 
+body > div.background {
+  height: auto; 
+}
+*/
+
+h1{
+    font-size: 14pt;
+    font-weight: bold;
+    color: orange;
+    font-family: 'Helvetica, Meiryo';
+    letter-spacing: 0.3em;
+    padding-bottom: 38px;
+    margin:0;
+}
+
+
+.clear{
+    clear:both;
+}
+
+button#make_fusen{
+    padding: 22px 36px;
+    font-size: 18pt;
+}
+
+#page{
+	height: 800px;
+	width: 600px;
+	margin: 50px;
+}
+
+#canvas-wrap{
+	position: relative;
+
+}
+
+canvas{
+	height: 400px;
+	width: 600px;
+	/*background: white;*/
+	border: 1px solid black;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 0;
+}
+
+#button_area{
+	/*height:200px;*/
+	margin-top: 450px;
+	width: auto;
+	/*background: red;*/
+}
+
+.fusen{
+	background:yellow;
+	width: 50px;
+	height: 30px;
+	color: red;
+	position: absolute;
+	top: 20px;
+	left: 60px;
+/*	font-style: normal;
+	font-variant: normal;
+	font-weight: normal; 
+	font-stretch: normal;
+	font-size: 20px; 
+	line-height: 20px; 
+	font-family: sans-serif; 
+	text-align: center;
+	background:transparent;
+*/}
+
