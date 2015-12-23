@@ -1,20 +1,26 @@
 
 html,
 body,
-/*div.background*/
-{    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+div.background
+{     /*IE9 SVG, needs conditional override of 'filter' to 'none' */
 height: 100%; 
-background: #EDEDED;
+background: #F3FFFF;
 }
- 
-/*div.background {
+
+div.background {
 min-height: 100%; 
 }
  
 body > div.background {
   height: auto; 
 }
-*/
+
+#page{
+	height: 800px;
+	width: 800px;
+	margin: 50px;
+	z-index: -5;
+}
 
 h1{
     font-size: 14pt;
@@ -26,7 +32,6 @@ h1{
     margin:0;
 }
 
-
 .clear{
     clear:both;
 }
@@ -36,20 +41,11 @@ button#make_fusen{
     font-size: 18pt;
 }
 
-#page{
-	height: 800px;
-	width: 600px;
-	margin: 50px;
-	z-index: -5;
-}
-
-
 #canvas-wrap{
 	position: relative;
 	top:0;
 	left:0;
 	/*z-index: -1;*/
-
 }
 
 canvas{
@@ -57,14 +53,8 @@ canvas{
 	position: relative;
 	top: 0;
 	left: 0;
+	background: #ffffff; /* white */
 	/*z-index: -1;*/
-}
-
-#button_area{
-	/*height:200px;*/
-	margin-top: 50px;
-	width: auto;
-	/*background: red;*/
 }
 
 .fusen{
@@ -73,7 +63,15 @@ canvas{
 	color: black;
 	font-size: 11px;
 	font-family: メイリオ, sans-serif;
-	left: 60px;
-	top: 120px;
+	background: #ffdd34;
+	padding: 5px;
 	z-index: 100;
 }
+
+#button_area{
+	/*height:200px;*/
+	/*background: red;*/
+	width: auto;
+	margin-bottom: 10px;
+}
+
