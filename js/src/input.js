@@ -1,7 +1,14 @@
 
 var i=1; //idインクリメント
-var pos_x = 50;
-var pos_y = 50;
+
+var init_pos_x = 50;
+var init_pos_y = 50;
+var pos_x = init_pos_x;
+var pos_y = init_pos_y;
+
+function fusen_remove(){
+	$('.fusen').remove();
+}
 
 function fusen_display(){
 
@@ -25,7 +32,7 @@ function fusen_display(){
 	$('#canvas-wrap').append(element);
 
 	// pos_x += 50;
-	pos_y += 50;
+	pos_y += 60;
 
 	i = i + 1;
 
@@ -39,5 +46,17 @@ $(document).keydown(function(e){
 		case 65: // Aのキーコード
 			$('#make_fusen').click();
 			break;
+		case 68: // Dのキーコード
+			if(!confirm('削除してよろしいですか？')){
+				// キャンセル時
+				return false;
+			}else{
+				// OK時
+				$('#remove_fusen').click();
+				pos_x = init_pos_x;
+				pos_y = init_pos_y;
+			}
+			break;
+
 	}
 });
