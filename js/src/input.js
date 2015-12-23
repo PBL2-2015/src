@@ -32,3 +32,12 @@ function fusen_display(){
    // ctx.restore();  // おまじない
 
 }
+
+
+$(document).keydown(function(e){
+	switch(e.keyCode){
+		case 65: // Aのキーコード
+			$('#make_fusen').click();
+			break;
+	}
+});
