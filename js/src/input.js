@@ -1,8 +1,8 @@
 
 var i=1; //idインクリメント
 
-var init_canvas_width = 600;
-var init_canvas_height = 600;
+var init_canvas_width = 650;
+var init_canvas_height = 650;
 var init_pos_x = 50;
 var init_pos_y = 50;
 var pos_x = init_pos_x;
@@ -40,18 +40,30 @@ function fusen_display(){
 	element.style.top = pos_y + 'px'; 
 	element.style.left = pos_x + 'px';
 
+
+	// canvasの高さの修正
+	if(pos_y > canvas.height){
+		canvas.height = pos_y + 100;
+		pos_y += 100;
+	}else{
+		pos_y += 100;
+	}
+
+	// canvas幅の修正
+	if(pos_x + 100> canvas.width){
+		canvas.width = pos_x + 150;
+	}
+
+	// 次の列の移動する
+	if(pos_y >= 600){
+		pos_y = init_pos_y;
+		pos_x += 150;
+	}
+
 	// canvas-wrapの子要素（canvasの下の位置）にdivを挿入する
 	$('#canvas-wrap').append(element);
 
-	// pos_x += 50;
-
-	if(pos_y > canvas.height){
-		canvas.height = pos_y + 100;
-		pos_y += 60;
-	}else{
-		pos_y += 60;
-	}
-
+	// idを増やす
 	i = i + 1;
 
    // ctx.restore();  // おまじない
