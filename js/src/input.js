@@ -40,17 +40,28 @@ function fusen_display(){
 	element.style.top = pos_y + 'px'; 
 	element.style.left = pos_x + 'px';
 
+	// 付箋がcanvasのheightを超える場合に，canvasのheightを高くする
+	// if(pos_y + 100 > canvas.height){
+	// 	canvas.height = pos_y + 200;
+	// 	pos_y += 100;
+	// }else{
+	// 	pos_y += 100;
+	// }
+
+	if(pos_x + 150 >= canvas.width){
+		canvas.width = pos_x + 200;
+	}
+
+	// 付箋を6個以上貼った場合に2列目に移動
+	if(pos_y >= 550){
+		pos_x += 200;
+		pos_y = init_pos_y;
+	} else{
+		pos_y += 100;
+	}
+
 	// canvas-wrapの子要素（canvasの下の位置）にdivを挿入する
 	$('#canvas-wrap').append(element);
-
-	// pos_x += 50;
-
-	if(pos_y > canvas.height){
-		canvas.height = pos_y + 100;
-		pos_y += 60;
-	}else{
-		pos_y += 60;
-	}
 
 	i = i + 1;
 

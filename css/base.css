@@ -66,8 +66,11 @@ canvas{
 	font-size: 16px;
 	font-family: メイリオ, sans-serif;
 	background: #ffdd34;
-	padding: 12px;
+	padding-top: 8px;
 	z-index: 100;
+	word-break:break-all;
+	width: 150px;
+	height: 50px;
 }
 
 #button_area{
