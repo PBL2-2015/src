@@ -1,6 +1,8 @@
 
 var i=1; //idインクリメント
 
+var init_canvas_width = 600;
+var init_canvas_height = 600;
 var init_pos_x = 50;
 var init_pos_y = 50;
 var pos_x = init_pos_x;
@@ -14,8 +16,9 @@ function fusen_remove(){
 		// OK時
 		$('.fusen').remove();
 		//　位置情報を初期化
-		os_x = init_pos_x;
+		pos_x = init_pos_x;
 		pos_y = init_pos_y;
+		canvas.height = init_canvas_height;
 	}
 }
 
@@ -41,7 +44,13 @@ function fusen_display(){
 	$('#canvas-wrap').append(element);
 
 	// pos_x += 50;
-	pos_y += 60;
+
+	if(pos_y > canvas.height){
+		canvas.height = pos_y + 100;
+		pos_y += 60;
+	}else{
+		pos_y += 60;
+	}
 
 	i = i + 1;
 
