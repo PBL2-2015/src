@@ -7,7 +7,16 @@ var pos_x = init_pos_x;
 var pos_y = init_pos_y;
 
 function fusen_remove(){
-	$('.fusen').remove();
+	if(!confirm('削除してよろしいですか？')){
+		// キャンセル時
+		return false;
+	}else{
+		// OK時
+		$('.fusen').remove();
+		//　位置情報を初期化
+		os_x = init_pos_x;
+		pos_y = init_pos_y;
+	}
 }
 
 function fusen_display(){
@@ -47,16 +56,7 @@ $(document).keydown(function(e){
 			$('#make_fusen').click();
 			break;
 		case 68: // Dのキーコード
-			if(!confirm('削除してよろしいですか？')){
-				// キャンセル時
-				return false;
-			}else{
-				// OK時
-				$('#remove_fusen').click();
-				pos_x = init_pos_x;
-				pos_y = init_pos_y;
-			}
+			$('#remove_fusen').click();
 			break;
-
 	}
 });
