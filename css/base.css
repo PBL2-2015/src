@@ -36,15 +36,12 @@ h1{
     clear:both;
 }
 
-button#make_fusen{
+button#make_fusen,#remove_fusen{
     padding: 11px 36px;
     font-size: 16pt;
+    display: inline;
 }
 
-button#remove_fusen{
-    padding: 11px 36px;
-    font-size: 16pt;
-}
 
 #canvas-wrap{
 	position: relative;
