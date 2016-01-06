@@ -9,7 +9,7 @@ var pos_x = init_pos_x;
 var pos_y = init_pos_y;
 
 
-function fusen_remove(){
+function all_remove(){
 	if(!confirm('削除してよろしいですか？')){
 		// キャンセル時
 		return false;
@@ -22,6 +22,20 @@ function fusen_remove(){
 		canvas.height = init_canvas_height;
 	}
 }
+
+function fusen_remove(){
+	if(!confirm('削除してよろしいですか？')){
+		// キャンセル時
+		return false;
+	}else{
+		// OK時
+		parent = element.parentNode;
+		console.log(parent);
+		$(parent).remove();
+		//　位置情報を初期化
+	}
+}
+	
 
 function fusen_display(){
 
@@ -55,6 +69,14 @@ function fusen_display(){
 	element.style.top = pos_y + 'px'; 
 	element.style.left = pos_x + 'px';
 
+	var cross_element = document.createElement('div');
+	cross_element.className = 'cross';
+	cross_element.innerHTML = '☓';
+	cross_element.style.top = (pos_y - 40) + 'px'; 
+	cross_element.style.left = (pos_x + 83) + 'px';
+	cross_element.onclick = function(){
+	fusen_remove();
+	}
 
 	// canvasの高さの修正
 	if(pos_y > canvas.height){
@@ -65,7 +87,7 @@ function fusen_display(){
 	}
 
 	// canvas幅の修正
-	if(pos_x + 100> canvas.width){
+	if(pos_x + 100 > canvas.width){
 		canvas.width = pos_x + 150;
 	}
 
@@ -76,7 +98,7 @@ function fusen_display(){
 	}
 
 	// canvas-wrapの子要素（canvasの下の位置）にdivを挿入する
-	$('#canvas-wrap').append(element);
+	$('#canvas-wrap').append($(element).append(cross_element));
 
 	// idを増やす
 	i = i + 1;
@@ -89,10 +111,7 @@ function fusen_display(){
 	});
 
    // ctx.restore();  // おまじない
-
-
-	
-	
+		
 }
 
 // キーボードショートカット
