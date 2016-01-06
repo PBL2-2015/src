@@ -14,6 +14,9 @@
 <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
 <script type="text/javascript" src="js/src/input.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+
+
 <title>Brasticky</title>
 
 <script type="text/javascript">
@@ -21,6 +24,7 @@ $(function() {
   // 1ドラッグ＆ドロップ機能を実装
   $('#canvas').droppable();
 });
+
 
 </script>
 
@@ -43,6 +47,13 @@ $(function() {
 		<p>作成　：Aキーでショートカット</p>
 
 		<p>クリア：Dキーでショートカット</p>
+
+  <button onclick="screenshot('#canvas-wrap')">Take a shot</button>
+  <a id="download" href="#" download="test.jpg"></a>
+<!-- <div id="output_screen">
+  <img id="screen_image">
+</div>
+ -->
 
 
 	<div id="canvas-wrap">
