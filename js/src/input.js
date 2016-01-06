@@ -1,12 +1,13 @@
 
 var i=1; //idインクリメント
 
-var init_canvas_width = 650;
-var init_canvas_height = 650;
+var init_canvas_width = 3000;
+var init_canvas_height = 3000;
 var init_pos_x = 50;
 var init_pos_y = 50;
 var pos_x = init_pos_x;
 var pos_y = init_pos_y;
+
 
 function fusen_remove(){
 	if(!confirm('削除してよろしいですか？')){
@@ -24,11 +25,25 @@ function fusen_remove(){
 
 function fusen_display(){
 
-	var input = window.prompt("アイデアを入力してください");
-
 	var canvas = document.getElementById("canvas");
 	var ctx = canvas.getContext("2d");
-	
+
+	var input = window.prompt("アイデアを入力してください");
+
+	var n = input.length;
+
+	console.log(n);
+	while(n > 30 || n == 0){
+		if(n > 30){
+			alert("30文字以内じゃないと表示しないんだからね！！");
+		}else if(n == 0){
+			alert("入力が空です");
+		}
+		var input = window.prompt("アイデアを入力してください");
+		var n = input.length;
+	}
+
+
 	// ctx.save();  // おまじない
 
 	// div要素を作成する
@@ -43,10 +58,10 @@ function fusen_display(){
 
 	// canvasの高さの修正
 	if(pos_y > canvas.height){
-		canvas.height = pos_y + 100;
-		pos_y += 100;
+		canvas.height = pos_y + 200;
+		pos_y += 150;
 	}else{
-		pos_y += 100;
+		pos_y += 150;
 	}
 
 	// canvas幅の修正
@@ -55,7 +70,7 @@ function fusen_display(){
 	}
 
 	// 次の列の移動する
-	if(pos_y >= 600){
+	if(pos_y >= 3000){
 		pos_y = init_pos_y;
 		pos_x += 150;
 	}
@@ -65,9 +80,19 @@ function fusen_display(){
 
 	// idを増やす
 	i = i + 1;
+	
+	// 付箋をドラッグ可能にする
+	$('.fusen').draggable({
+		containment: '#canvas', // canvas内でのみドラッグ可能
+		opacity: 0.3, // 移動中の透過率
+	 	revert: false // ドラッグ終了時に元の場所に戻さない
+	});
 
    // ctx.restore();  // おまじない
 
+
+	
+	
 }
 
 
