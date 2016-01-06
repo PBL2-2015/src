@@ -3,31 +3,49 @@
 <head>
 <meta charset="UTF-8">
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/input.js"></script>
+<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+ -->
+<script type="text/javascript" src="js/lib/jquery-1.11.2.min.js"></script>
+<!-- <script type="text/javascript" src="js/lib/jquery-ui-1.10.4.custom.min"></script> -->
+<script type="text/javascript" src="js/src/input.js"></script>
+
+<!-- <script type="text/javascript" src="js/bootstrap.min.js"></script> -->
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/base.css" >
+
 <title>Brasticky</title>
+
+
 </head>
 <body>
+
 <div id="page">
 
 	<header>
 		<h1>Brasticky</h1>
 	</header>
 
-	<div id="canvas-wrap">
-		<canvas id="canvas">
-			<!-- <div id="1" class="fusen">test</div> -->
-		</canvas>
-	</div>
+	<main>
 
 	<div id="button_area">
-		<button id="make_fusen" class="btn btn-success" onclick="fusen_display()">作成！</button>
+		<button id="make_fusen" class="btn btn-success" onclick="fusen_display()">作成</button>
+		<button id="remove_fusen" class="btn btn-success" onclick="fusen_remove()">クリア</button>
 	</div>
 
-</div><!-- page -->
+		<p>作成　：Aキーでショートカット</p>
+
+		<p>クリア：Dキーでショートカット</p>
+
+
+	<div id="canvas-wrap">
+	 	<canvas id="canvas" width="650" height="650"></canvas>
+	 	<!-- ここにdivが挿入される -->
+	</div>
+
+	</main>
+
+</div>
 
 
 </body> 
