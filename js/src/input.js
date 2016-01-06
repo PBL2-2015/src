@@ -95,7 +95,7 @@ function fusen_display(){
 	
 }
 
-
+// キーボードショートカット
 $(document).keydown(function(e){
 	switch(e.keyCode){
 		case 65: // Aのキーコード
@@ -106,3 +106,21 @@ $(document).keydown(function(e){
 			break;
 	}
 });
+
+// スクリーンショット機能
+function screenshot(selector) {
+    var element = $(selector)[0];
+    html2canvas(element, {onrendered:function(canvas) {
+        var imgData = canvas.toDataURL();
+        // $('#screen_image')[0].src = imgData;
+        $('#download')[0].href = imgData;
+        $('#download')[0].innerHTML = "ダウンロード";
+    }});
+}
+
+// function erase_screenshot() {
+//     $('#screen_image')[0].src = "";
+//     $('#download')[0].href = "#";
+//     $('#download')[0].innerHTML = "";
+// }
+
