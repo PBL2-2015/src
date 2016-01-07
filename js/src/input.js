@@ -23,18 +23,6 @@ function all_remove(){
 	}
 }
 
-function fusen_remove(){
-	if(!confirm('削除してよろしいですか？')){
-		// キャンセル時
-		return false;
-	}else{
-		// OK時
-		parent = element.parentNode;
-		console.log(parent);
-		$(parent).remove();
-		//　位置情報を初期化
-	}
-}
 	
 
 function fusen_display(){
@@ -72,30 +60,45 @@ function fusen_display(){
 	var cross_element = document.createElement('div');
 	cross_element.className = 'cross';
 	cross_element.innerHTML = '☓';
-	cross_element.style.top = (pos_y - 40) + 'px'; 
-	cross_element.style.left = (pos_x + 83) + 'px';
+
+	cross_element.style.top = 5 + 'px'; 
+	cross_element.style.left = 135 + 'px';
+
+// 誤り
+	// cross_element.style.top = pos_y + 'px'; 
+	// cross_element.style.left = pos_x + 'px';
+
+	// ☓ボタンをクリックした場合の操作
 	cross_element.onclick = function(){
-	fusen_remove();
+		if(!confirm('削除してよろしいですか？')){
+			// キャンセル時
+			return false;
+		}else{
+			// OK時
+			console.log("削除されました");
+		}
 	}
+	
+	pos_x += 200;
 
-	// canvasの高さの修正
-	if(pos_y > canvas.height){
-		canvas.height = pos_y + 200;
-		pos_y += 150;
-	}else{
-		pos_y += 150;
-	}
+	// // canvasの高さの修正
+	// if(pos_y > canvas.height){
+	// 	canvas.height = pos_y + 200;
+	// 	pos_y += 150;
+	// }else{
+	// 	pos_y += 150;
+	// }
 
-	// canvas幅の修正
-	if(pos_x + 100 > canvas.width){
-		canvas.width = pos_x + 150;
-	}
+	// // canvas幅の修正
+	// if(pos_x + 100 > canvaas.width){
+	// 	canvas.width = pos_x + 150;
+	// }
 
-	// 次の列の移動する
-	if(pos_y >= 3000){
-		pos_y = init_pos_y;
-		pos_x += 150;
-	}
+	// // 次の列の移動する
+	// if(pos_y >= 3000){
+	// 	pos_y = init_pos_y;
+	// 	pos_x += 150;
+	// }
 
 	// canvas-wrapの子要素（canvasの下の位置）にdivを挿入する
 	$('#canvas-wrap').append($(element).append(cross_element));

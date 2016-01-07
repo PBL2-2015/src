@@ -83,6 +83,7 @@ canvas{
 	z-index: 200;
 	width: 5px;
 	height: 5px;
+	cursor: pointer;
 
 }
 
@@ -93,3 +94,6 @@ canvas{
 	margin-bottom: 10px;
 }
 
+#capture_btn{
+	margin-bottom: 10px;
+}

@@ -21,7 +21,7 @@
 
 <script type="text/javascript">
 $(function() {
-  // 1ドラッグ＆ドロップ機能を実装
+  // canvasをドロップ可能に設定
   $('#canvas').droppable();
 });
 
@@ -48,7 +48,7 @@ $(function() {
 
 		<p>クリア：Dキーでショートカット</p>
 
-  <button onclick="screenshot('#canvas-wrap')">Take a shot</button>
+  <button id ="capture_btn" onclick="screenshot('#canvas-wrap')">canvasを保存する</button>
   <a id="download" href="#" download="test.jpg"></a>
 <!-- <div id="output_screen">
   <img id="screen_image">
