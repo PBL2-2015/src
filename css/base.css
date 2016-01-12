@@ -16,8 +16,8 @@ body > div.background {
 }
 
 #page{
-	height: 3000px;
-	width: 3000px;
+	height: 3500px;
+	width: 3500px;
 	margin: 50px;
 	z-index: -5;
 }
@@ -48,6 +48,10 @@ button#make_fusen,#remove_fusen{
 	top:0;
 	left:0;
 	/*z-index: -1;*/
+
+	/* canvasと同じサイズに指定 */
+	width: 3000px;
+	height: 3000px;
 }
 
 canvas{
@@ -72,6 +76,21 @@ canvas{
 	height: 100px;
 }
 
+.cross{
+	position: absolute;
+	text-align: center; 
+	color: black;
+	font-size: 8px;
+	font-family: メイリオ, sans-serif;
+	background: #ffdd34;
+	padding: 0.5px;
+	z-index: 200;
+	width: 5px;
+	height: 5px;
+	cursor: pointer;
+
+}
+
 #button_area{
 	/*height:200px;*/
 	/*background: red;*/
@@ -79,3 +98,7 @@ canvas{
 	margin-bottom: 10px;
 }
 
+#download{
+	margin-bottom: 10px;
+	visibility: hidden;
+}

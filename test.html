@@ -16,13 +16,16 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
 
+
 <title>Brasticky</title>
 
 <script type="text/javascript">
-  // canvasをドロップ可能に設定
 $(function() {
+  // 1ドラッグ＆ドロップ機能を実装
   $('#canvas').droppable();
 });
+
+
 </script>
 
 </head>
@@ -38,17 +41,20 @@ $(function() {
 
 	<div id="button_area">
 		<button id="make_fusen" class="btn btn-success" onclick="fusen_display()">作成</button>
-		<button id="remove_fusen" class="btn btn-success" onclick="all_remove()">クリア</button>
+		<button id="remove_fusen" class="btn btn-success" onclick="fusen_remove()">クリア</button>
 	</div>
 
-	<p>作成　：Aキーでショートカット</p>
-	<p>クリア：Dキーでショートカット</p>
+		<p>作成　：Aキーでショートカット</p>
 
-	<button id="capture_btn" class="btn btn-default" style="margin-bottom:10px;"onclick="screenshot('#canvas-wrap')">
-	canvasを保存する
- 	</button>
+		<p>クリア：Dキーでショートカット</p>
 
- 	<a id="download" class="btn btn-default" href="#" download="test.jpg">ダウンロード</a>
+  <button onclick="screenshot('#canvas-wrap')">Take a shot</button>
+  <a id="download" href="#" download="test.jpg"></a>
+<!-- <div id="output_screen">
+  <img id="screen_image">
+</div>
+ -->
+
 
 	<div id="canvas-wrap">
 	 	<canvas id="canvas" width="3000" height="3000"></canvas>
@@ -57,7 +63,7 @@ $(function() {
 
 	</main>
 
-</div> <!-- page -->
+</div>
 
 
 </body> 
