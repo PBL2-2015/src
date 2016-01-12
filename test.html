@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+
+<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+ -->
+
+<link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/cupertino/jquery-ui.min.css" />
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/base.css" >
+<script type="text/javascript" src="js/lib/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+<script type="text/javascript" src="js/src/input.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+
+
+<title>Brasticky</title>
+
+<script type="text/javascript">
+$(function() {
+  // 1ドラッグ＆ドロップ機能を実装
+  $('#canvas').droppable();
+});
+
+
+</script>
+
+</head>
+<body>
+
+<div id="page">
+
+	<header>
+		<h1>Brasticky</h1>
+	</header>
+
+	<main>
+
+	<div id="button_area">
+		<button id="make_fusen" class="btn btn-success" onclick="fusen_display()">作成</button>
+		<button id="remove_fusen" class="btn btn-success" onclick="fusen_remove()">クリア</button>
+	</div>
+
+		<p>作成　：Aキーでショートカット</p>
+
+		<p>クリア：Dキーでショートカット</p>
+
+  <button onclick="screenshot('#canvas-wrap')">Take a shot</button>
+  <a id="download" href="#" download="test.jpg"></a>
+<!-- <div id="output_screen">
+  <img id="screen_image">
+</div>
+ -->
+
+
+	<div id="canvas-wrap">
+	 	<canvas id="canvas" width="3000" height="3000"></canvas>
+	 	<!-- ここにdivが挿入される -->
+	</div>
+
+	</main>
+
+</div>
+
+
+</body> 
+</html>
