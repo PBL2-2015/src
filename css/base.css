@@ -16,8 +16,8 @@ body > div.background {
 }
 
 #page{
-	height: 3000px;
-	width: 3000px;
+	height: 3500px;
+	width: 3500px;
 	margin: 50px;
 	z-index: -5;
 }
@@ -48,6 +48,10 @@ button#make_fusen,#remove_fusen{
 	top:0;
 	left:0;
 	/*z-index: -1;*/
+
+	/* canvasと同じサイズに指定 */
+	width: 3000px;
+	height: 3000px;
 }
 
 canvas{
@@ -94,6 +98,7 @@ canvas{
 	margin-bottom: 10px;
 }
 
-#capture_btn{
+#download{
 	margin-bottom: 10px;
+	visibility: hidden;
 }

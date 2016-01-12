@@ -5,10 +5,11 @@ var init_canvas_width = 3000;
 var init_canvas_height = 3000;
 var init_pos_x = 50;
 var init_pos_y = 50;
+
 var pos_x = init_pos_x;
 var pos_y = init_pos_y;
 
-
+// canvas内の付箋を全て削除する
 function all_remove(){
 	if(!confirm('削除してよろしいですか？')){
 		// キャンセル時
@@ -23,8 +24,7 @@ function all_remove(){
 	}
 }
 
-	
-
+// 付箋を表示する
 function fusen_display(){
 
 	var canvas = document.getElementById("canvas");
@@ -34,7 +34,7 @@ function fusen_display(){
 
 	var n = input.length;
 
-	console.log(n);
+	// 空入力 OR 30文字以上の場合に警告を表示し続ける
 	while(n > 30 || n == 0){
 		if(n > 30){
 			alert("30文字以内じゃないと表示しないんだからね！！");
@@ -45,26 +45,25 @@ function fusen_display(){
 		var n = input.length;
 	}
 
-
-	// ctx.save();  // おまじない
-
-	// div要素を作成する
+	// 付箋のdiv要素を作成
 	var element = document.createElement('div');
-	// div要素にidやclassを付加する
-	element.id = i;
+	// div要素にidやclassを付加
+	element.id = i + '_fusen';
 	element.className = 'fusen';
 	element.innerHTML = input;
 	element.style.top = pos_y + 'px'; 
 	element.style.left = pos_x + 'px';
 
+	// バツボタンのdiv要素を作成
 	var cross_element = document.createElement('div');
+	cross_element.id = i + '_cross';
 	cross_element.className = 'cross';
 	cross_element.innerHTML = '☓';
 
-	cross_element.style.top = 5 + 'px'; 
+	cross_element.style.top = 2 + 'px'; 
 	cross_element.style.left = 135 + 'px';
 
-// 誤り
+	// 誤り
 	// cross_element.style.top = pos_y + 'px'; 
 	// cross_element.style.left = pos_x + 'px';
 
@@ -75,11 +74,17 @@ function fusen_display(){
 			return false;
 		}else{
 			// OK時
+			// 親要素のfusenを削除
+			$(this).parent().remove();
+			// ☓ボタンを削除
+			$(this).remove();
 			console.log("削除されました");
 		}
 	}
 	
+	// 付箋の作成位置を右にずらす
 	pos_x += 200;
+
 
 	// // canvasの高さの修正
 	// if(pos_y > canvas.height){
@@ -112,8 +117,6 @@ function fusen_display(){
 		opacity: 0.3, // 移動中の透過率
 	 	revert: false // ドラッグ終了時に元の場所に戻さない
 	});
-
-   // ctx.restore();  // おまじない
 		
 }
 
@@ -126,6 +129,9 @@ $(document).keydown(function(e){
 		case 68: // Dのキーコード
 			$('#remove_fusen').click();
 			break;
+		case 83: //Sのキーコード
+			$('#capture_btn').click();
+			break;
 	}
 });
 
@@ -137,6 +143,7 @@ function screenshot(selector) {
         // $('#screen_image')[0].src = imgData;
         $('#download')[0].href = imgData;
         $('#download')[0].innerHTML = "ダウンロード";
+        $('#download')[0].style.visibility= 'visible';
     }});
 }
 
