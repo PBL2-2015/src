@@ -141,6 +141,7 @@ function screenshot(selector) {
     html2canvas(element, {onrendered:function(canvas) {
         var imgData = canvas.toDataURL();
         // $('#screen_image')[0].src = imgData;
+        $('#download')[0] = 'sample.png' 
         $('#download')[0].href = imgData;
         $('#download')[0].innerHTML = "ダウンロード";
         $('#download')[0].style.visibility= 'visible';
