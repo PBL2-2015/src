@@ -160,6 +160,14 @@ $(document).on('click','#capture_btn', function(){
 
 });
 
+$(function(){
+if (navigator.userAgent.indexOf('iPhone') > 0){
+$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=0.5,minimum-scale=0.2,maximum-scale=1.5,user-scalable=yes" />\n'));
+}else if(navigator.userAgent.indexOf('Android') > 0){
+$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0.2,maximum-scale=1.5,user-scalable=yes" />\n'));
+}
+
+})
 
 
 
