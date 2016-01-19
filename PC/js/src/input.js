@@ -27,6 +27,12 @@ function all_remove(){
 
 function fusen_display(){
 
+	// 連続入力がONのとき１，OFFのとき0を返す
+	var check_count = $(':radio[name="conInput"]:checked').length;
+
+console.log(check_count);
+
+
 	var canvas = document.getElementById("canvas");
 	var ctx = canvas.getContext("2d");
 
@@ -34,7 +40,6 @@ function fusen_display(){
 
 	var n = input.length;
 
-	console.log(n);
 	while(n > 30 || n == 0){
 		if(n > 30){
 			alert("30文字以内じゃないと表示しないんだからね！！");
@@ -44,7 +49,6 @@ function fusen_display(){
 		var input = window.prompt("アイデアを入力してください");
 		var n = input.length;
 	}
-
 
 	// ctx.save();  // おまじない
 
@@ -65,9 +69,6 @@ function fusen_display(){
 	cross_element.style.top = 5 + 'px'; 
 	cross_element.style.left = 135 + 'px';
 
-// 誤り
-	// cross_element.style.top = pos_y + 'px'; 
-	// cross_element.style.left = pos_x + 'px';
 
 	// ☓ボタンをクリックした場合の操作
 	cross_element.onclick = function(){
@@ -100,11 +101,12 @@ function fusen_display(){
 	// 	canvas.width = pos_x + 150;
 	// }
 
-	// // 次の列の移動する
-	// if(pos_y >= 3000){
-	// 	pos_y = init_pos_y;
-	// 	pos_x += 150;
-	// }
+
+	// 次の列へ移動する
+	if(pos_x >= 2800){
+		pos_x = init_pos_y;
+		pos_y += 150;
+	}
 
 	// canvas-wrapの子要素（canvasの下の位置）にdivを挿入する
 	$('#canvas-wrap').append($(element).append(cross_element));
@@ -119,8 +121,10 @@ function fusen_display(){
 	 	revert: false // ドラッグ終了時に元の場所に戻さない
 	});
 
-   // ctx.restore();  // おまじない
-		
+	if(check_count == 1){
+		fusen_display();
+	}
+
 }
 
 // キーボードショートカット
