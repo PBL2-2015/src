@@ -8,6 +8,12 @@ var init_pos_y = 50;
 var pos_x = init_pos_x;
 var pos_y = init_pos_y;
 
+var milkcocoa = new MilkCocoa('yieldijtvk6yv.mlkcca.com');
+
+
+
+// データストアの作成
+var ds = milkcocoa.dataStore('fusen/message');
 
 function all_remove(){
 	if(!confirm('削除してよろしいですか？')){
@@ -22,16 +28,11 @@ function all_remove(){
 		canvas.height = init_canvas_height;
 	}
 }
-
 	
-
 function fusen_display(){
 
 	// 連続入力がONのとき１，OFFのとき0を返す
 	var check_count = $(':radio[name="conInput"]:checked').length;
-
-console.log(check_count);
-
 
 	var canvas = document.getElementById("canvas");
 	var ctx = canvas.getContext("2d");
@@ -50,9 +51,78 @@ console.log(check_count);
 		var n = input.length;
 	}
 
-	// ctx.save();  // おまじない
+	console.log('pushするよ');
+	ds.push({
+            content : input
+    });
 
-	// div要素を作成する
+	// // div要素を作成する
+	// var element = document.createElement('div');
+	// // div要素にidやclassを付加する
+	// element.id = i+"_fusen";
+	// element.className = 'fusen';
+	// element.innerHTML = input;
+	// element.style.top = pos_y + 'px'; 
+	// element.style.left = pos_x + 'px';
+
+	// var cross_element = document.createElement('div');
+	// cross_element.id = i+"_cross";
+	// cross_element.className = 'cross';
+	// cross_element.innerHTML = '☓';
+
+	// cross_element.style.top = 5 + 'px'; 
+	// cross_element.style.left = 135 + 'px';
+
+
+	// // ☓ボタンをクリックした場合の操作
+	// cross_element.onclick = function(){
+	// 	if(!confirm('削除してよろしいですか？')){
+	// 		// キャンセル時
+	// 		return false;
+	// 	}else{
+	// 		// OK時
+	// 		console.log("削除されました");
+	// 		var num = this.id.match(/\d/g).join("");
+	// 		//alert(num+"_fusen"); //テスト用
+	// 		//document.getElementById(num+"_fusen").style.display="none"; //displayを使う方法
+	// 		document.getElementById(num+"_fusen").style.visibility="hidden"; //visibilityを使う方法
+	// 		//$(this).parent().remove(); //remove使う方法
+	// 	}
+	// }
+	
+	// pos_x += 200;
+
+	// // 次の列へ移動する
+	// if(pos_x >= 2800){
+	// 	pos_x = init_pos_y;
+	// 	pos_y += 150;
+	// }
+
+	// canvas-wrapの子要素（canvasの下の位置）にdivを挿入する
+	// $('#canvas-wrap').append($(element).append(cross_element));
+
+	// idを増やす
+	// i = i + 1;
+	
+	// 付箋をドラッグ可能にする
+	// $('.fusen').draggable({
+		// containment: '#canvas', // canvas内でのみドラッグ可能
+		// opacity: 0.3, // 移動中の透過率
+	 	// revert: false // ドラッグ終了時に元の場所に戻さない
+	// });
+
+	if(check_count == 1){
+		fusen_display();
+	}
+
+}
+
+function createFusen(input){
+
+	// 連続入力がONのとき１，OFFのとき0を返す
+	var check_count = $(':radio[name="conInput"]:checked').length;
+
+
 	var element = document.createElement('div');
 	// div要素にidやclassを付加する
 	element.id = i+"_fusen";
@@ -88,20 +158,6 @@ console.log(check_count);
 	
 	pos_x += 200;
 
-	// // canvasの高さの修正
-	// if(pos_y > canvas.height){
-	// 	canvas.height = pos_y + 200;
-	// 	pos_y += 150;
-	// }else{
-	// 	pos_y += 150;
-	// }
-
-	// // canvas幅の修正
-	// if(pos_x + 100 > canvaas.width){
-	// 	canvas.width = pos_x + 150;
-	// }
-
-
 	// 次の列へ移動する
 	if(pos_x >= 2800){
 		pos_x = init_pos_y;
@@ -121,11 +177,24 @@ console.log(check_count);
 	 	revert: false // ドラッグ終了時に元の場所に戻さない
 	});
 
-	if(check_count == 1){
-		fusen_display();
-	}
+	console.log('checkCount on createFusen = ' + check_count);
 
-}
+	// if(check_count == 1){
+	// 	fusen_display();
+	// }
+
+
+
+};
+
+$(function(){
+
+	ds.on('push',function(pushed){
+		createFusen(pushed.value.content)
+	});
+
+});
+
 
 // キーボードショートカット
 $(document).keydown(function(e){
@@ -138,6 +207,7 @@ $(document).keydown(function(e){
 			break;
 	}
 });
+
 
 // スクリーンショット機能
 
@@ -160,14 +230,21 @@ $(document).on('click','#capture_btn', function(){
 
 });
 
-$(function(){
-if (navigator.userAgent.indexOf('iPhone') > 0){
-$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=0.5,minimum-scale=0.2,maximum-scale=1.5,user-scalable=yes" />\n'));
-}else if(navigator.userAgent.indexOf('Android') > 0){
-$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0.2,maximum-scale=1.5,user-scalable=yes" />\n'));
-}
 
-})
+
+		// $(window).bind('resize load', function(){
+		// 	$("html").css("zoom" , $(window).width()/640 );
+		// });
+
+
+$(function(){
+	if (navigator.userAgent.indexOf('iPhone') > 0){
+		$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=0.5,minimum-scale=0.2,maximum-scale=1.5,user-scalable=yes" />\n'));
+	}else if(navigator.userAgent.indexOf('Android') > 0){
+		
+		$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0.2,maximum-scale=1.5,user-scalable=yes" />\n'));
+	}
+});
 
 
 
