@@ -4,7 +4,7 @@ body,
 div.background
 {     /*IE9 SVG, needs conditional override of 'filter' to 'none' */
 height: 100%; 
-background: #F3FFFF;
+background: #f4cc70;
 }
 
 div.background {
@@ -39,7 +39,7 @@ h1{
     clear:both;
 }
 
-button#make_fusen,#remove_fusen{
+button#makeFusen,#removeFusen{
     padding: 11px 36px;
     font-size: 16pt;
     display: inline;

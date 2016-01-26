@@ -2,24 +2,23 @@
 // milkcocoaリファレンス
 // https://mlkcca.com/document/api-js.html
 
-var i=1; //idインクリメント
+// var i=1; //idインクリメント
 
-var init_canvas_width = 3000;
-var init_canvas_height = 3000;
+var initCanvasWidth = 3000;
+var initCanvasHeight = 3000;
 var init_pos_x = 50;
 var init_pos_y = 50;
 var pos_x = init_pos_x;
 var pos_y = init_pos_y;
 
+// MilkCocoaオブジェクトのインスタンスを取得
 var milkcocoa = new MilkCocoa('yieldijtvk6yv.mlkcca.com');
-
-
 
 // データストアの作成
 var ds = milkcocoa.dataStore('fusen/message');
 
 // 付箋を全て削除する
-function all_remove(){
+function allRemove(){
 	if(!confirm('削除してよろしいですか？')){
 		// キャンセル時
 		return false;
@@ -29,27 +28,27 @@ function all_remove(){
 		//　位置情報を初期化
 		pos_x = init_pos_x;
 		pos_y = init_pos_y;
-		canvas.height = init_canvas_height;
+		canvas.height = initCanvasHeight;
 	}
 }
 	
-
-function fusen_display(){
+function fusenDisplay(){
 
 	// 連続入力がONのとき１，OFFのとき0を返す
-	var check_count = $(':checkbox[name="conInput"]:checked').length;
+	var checkCount = $(':checkbox[name="conInput"]:checked').length;
 
+	// canvasの設定
 	var canvas = document.getElementById("canvas");
 	var ctx = canvas.getContext("2d");
 
-	var input = window.prompt("アイデアを入力してください");
+	// ユーザがアイデアを入力する
+	var input = window.prompt("アイデアを入力してください(30文字以内)");
 
 	var n = input.length;
-
-	// 30文字以上or入力が空のときに警告
+	// 入力が30文字以上or入力が空のときに警告
 	while(n > 30 || n == 0){
 		if(n > 30){
-			alert("30文字以内じゃないと表示しないんだからね！！");
+			alert("30文字以内で記述して下さい");
 		}else if(n == 0){
 			alert("入力が空です");
 		}
@@ -57,16 +56,16 @@ function fusen_display(){
 		var n = input.length;
 	}
 
-	// 入力結果をデータストアに新しく追加
+	// 入力した内容をデータストアに新しく追加
+	// このときにidが自動で生成される（on()メソッド中でpushed.idとして取得可能）
 	ds.push({
             'content' : input,
             'visibility' : 'visible'
     });
 
-
 	// 連続入力がONの時に入力を繰り返す
-	if(check_count == 1){
-		fusen_display();
+	if(checkCount == 1){
+		fusenDisplay();
 	}
 
 }
@@ -74,17 +73,17 @@ function fusen_display(){
 function createFusen(id,input){
 
 	// 連続入力がONのとき１，OFFのとき0を返す
-	var check_count = $(':radio[name="conInput"]:checked').length;
+	var checkCount = $(':radio[name="conInput"]:checked').length;
 
+	// 付箋のdiv要素の作成 
 	var element = document.createElement('div');
-	
-	// div要素にidやclassを付加する
 	element.id = id +"_fusen";
 	element.className = 'fusen';
 	element.innerHTML = input;
 	element.style.top = pos_y + 'px'; 
 	element.style.left = pos_x + 'px';
 
+	// 削除ボタン(☓ボタン)のdiv要素の作成
 	var cross_element = document.createElement('div');
 	cross_element.id = id +"_cross";
 	cross_element.className = 'cross';
@@ -92,9 +91,10 @@ function createFusen(id,input){
 	cross_element.style.top = 5 + 'px'; 
 	cross_element.style.left = 130 + 'px';
 
-
 	// ☓ボタンをクリックした場合の操作
+
 	cross_element.onclick = function(){
+
 		if(!confirm('削除してよろしいですか？')){
 			// キャンセル時
 			return false;
@@ -103,8 +103,7 @@ function createFusen(id,input){
 		
 			// var num = this.id.match(/\d/g).join("");
 			// document.getElementById(num+"_fusen").style.visibility="hidden"; //visibilityを使う方法
-			//document.getElementById(num+"_fusen").style.display="none"; //displayを使う方法
-			
+			//document.getElementById(num+"_fusen").style.display="none"; //displayを使う方法			
 			//$(this).parent().remove(); //remove使う方法
 
 			// pushされたときに付加されたid（_crossより前の文字列）を切り取る
@@ -118,7 +117,6 @@ function createFusen(id,input){
 				'content' : text,
 				'visibility':'hidden'
 			});
-
 		}
 	}
 	
@@ -143,9 +141,7 @@ function createFusen(id,input){
 	 	revert: false // ドラッグ終了時に元の場所に戻さない
 	});
 
-
 };
-
 
 
 $(function(){
@@ -167,17 +163,15 @@ $(function(){
 $(document).keydown(function(e){
 	switch(e.keyCode){
 		case 65: // Aのキーコード
-			$('#make_fusen').click();
+			$('#makeFusen').click();
 			break;
 		case 68: // Dのキーコード
-			$('#remove_fusen').click();
+			$('#removeFusen').click();
 			break;
 	}
 });
 
-
 // スクリーンショット機能
-
 $(document).on('click','#capture_btn', function(){
 
 	var element = $('#canvas-wrap')[0];
@@ -190,19 +184,11 @@ $(document).on('click','#capture_btn', function(){
       	var downloadLink = document.createElement("a");
      	downloadLink.download = 'sample.png';
      	downloadLink.href = imgData;
-
      	downloadLink.click();
 
     }});
 
 });
-
-
-
-		// $(window).bind('resize load', function(){
-		// 	$("html").css("zoom" , $(window).width()/640 );
-		// });
-
 
 $(function(){
 	if (navigator.userAgent.indexOf('iPhone') > 0){
