@@ -43,7 +43,9 @@ function fusen_display(){
 		}
 		var input = window.prompt("アイデアを入力してください");
 		var n = input.length;
+		
 	}
+	
 
 
 	// ctx.save();  // おまじない
@@ -68,6 +70,7 @@ function fusen_display(){
 // 誤り
 	// cross_element.style.top = pos_y + 'px'; 
 	// cross_element.style.left = pos_x + 'px';
+
 
 	// ☓ボタンをクリックした場合の操作
 	cross_element.onclick = function(){
@@ -100,11 +103,11 @@ function fusen_display(){
 	// 	canvas.width = pos_x + 150;
 	// }
 
-	// // 次の列の移動する
-	// if(pos_y >= 3000){
-	// 	pos_y = init_pos_y;
-	// 	pos_x += 150;
-	// }
+	 // 次の列の移動する
+	if(pos_x >= 3000){
+		pos_x = init_pos_x;
+		pos_y += 150;
+	}
 
 	// canvas-wrapの子要素（canvasの下の位置）にdivを挿入する
 	$('#canvas-wrap').append($(element).append(cross_element));
@@ -120,6 +123,11 @@ function fusen_display(){
 	});
 
    // ctx.restore();  // おまじない
+	
+	checkbox_check = document.form1.hoge.checked;
+	if(checkbox_check){
+		fusen_display();
+	}
 		
 }
 
