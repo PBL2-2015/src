@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<!--
+<meta name="viewport" content="width=device-width, initial-scale=0.7,minimum-scale=0.1, maximum-scale=5.0, user-scalable=yes" />
+-->
+
+
+<!--
+<meta name="viewport" content="width=640px, initial-scale=0.5, minimum-scale=0.3,maxmumscale=5.0,user-scalable=yes, target-densitydpi=device-dpi">
+-->
+<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+-->
+<!--<link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/cupertino/jquery-ui.min.css" />-->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/base.css" >
+<script type="text/javascript" src="js/lib/jquery-2.2.0.min.js"></script>
+<script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
+<script src="js/lib/jquery.ui.touch-punch.min.js"></script>
+<!--
+<script src="https://cdnjs.cloudflare.com/ajax/libs/quo.js/2.3.6/quo.min.js"></script>
+-->
+<script type="text/javascript" src="js/src/input.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<!--
+<script type="text/javascript" src="js/src/monaca.viewport.js"></script>
+<script>
+       monaca.viewport({width : 640});
+</script>
+-->
+<script>
+$(function() {
+  $('#canvas').droppable();
+});    
+</script>
+
+
+<title>Brasticky</title>
+
+</head>
+<body>
+
+<div id="page">
+
+	<header>
+		<h1>Brasticky</h1>
+	</header>
+
+	<main>
+
+	<div id="button_area">
+		<button id="make_fusen" class="btn btn-success" onclick="fusen_display()">作成</button>
+		<button id="remove_fusen" class="btn btn-success" onclick="all_remove()">クリア</button>
+	</div>
+
+	<p>作成　：Aキーでショートカット</p>
+	<p>クリア：Dキーでショートカット</p>
+
+	<button id="capture_btn" class="btn btn-default" style="margin-bottom:10px;"onclick="screenshot('#canvas-wrap')">
+	canvasを保存する
+ 	</button>
+
+ 	<a id="download" class="btn btn-default" href="#" download="test.jpg">ダウンロード</a>
+
+	<div id="canvas-wrap">
+	 	<canvas id="canvas" width="1500" height="1500"></canvas>
+	 	<!-- ここにdivが挿入される -->
+	</div>
+
+	</main>
+
+</div> <!-- page -->
+
+
+</body> 
+</html>
