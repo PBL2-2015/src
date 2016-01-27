@@ -4,10 +4,10 @@
 
 // var i=1; //idインクリメント
 
-var initCanvasWidth = 3000;
-var initCanvasHeight = 3000;
-var init_pos_x = 50;
-var init_pos_y = 50;
+var initCanvasWidth = 2000;
+var initCanvasHeight = 2000;
+var init_pos_x = 50 + 'px';
+var init_pos_y = 50 + 'px';
 var pos_x = init_pos_x;
 var pos_y = init_pos_y;
 
@@ -58,10 +58,21 @@ function fusenDisplay(){
 
 	// 入力した内容をデータストアに新しく追加
 	// このときにidが自動で生成される（on()メソッド中でpushed.idとして取得可能）
+
 	ds.push({
             'content' : input,
-            'visibility' : 'visible'
+            'visibility' : 1,
+            'x' : pos_x,
+            'y' : pos_y
     });
+
+	pos_x = pos_x + 200 + 'px';
+
+	// 次の列へ移動する
+	if(pos_x >= 2800){
+		pos_x = init_pos_x;
+		pos_y += 150 + 'px';
+	}
 
 	// 連続入力がONの時に入力を繰り返す
 	if(checkCount == 1){
@@ -70,7 +81,7 @@ function fusenDisplay(){
 
 }
 
-function createFusen(id,input){
+function createFusen(id,input,pos_x,pos_y){
 
 	// 連続入力がONのとき１，OFFのとき0を返す
 	var checkCount = $(':radio[name="conInput"]:checked').length;
@@ -80,8 +91,8 @@ function createFusen(id,input){
 	element.id = id +"_fusen";
 	element.className = 'fusen';
 	element.innerHTML = input;
-	element.style.top = pos_y + 'px'; 
-	element.style.left = pos_x + 'px';
+	element.style.top = pos_y ;
+	element.style.left = pos_x ;
 
 	// 削除ボタン(☓ボタン)のdiv要素の作成
 	var cross_element = document.createElement('div');
@@ -107,26 +118,35 @@ function createFusen(id,input){
 			//$(this).parent().remove(); //remove使う方法
 
 			// pushされたときに付加されたid（_crossより前の文字列）を切り取る
+
+			a = this.parentNode.style.left; // 付箋のx座標
+			b = this.parentNode.style.top; // 付箋のy座標
+
 			tmp = this.id;
+
 			_id = tmp.substring(0, tmp.indexOf("_") );
+
+			console.log(a,b);
 
 			var text = $(_id + '_fusen').html();
 
 			// クリックされたidのデータを更新⇒setイベントを発火させる
 			ds.set(_id, {
 				'content' : text,
-				'visibility':'hidden'
+				'visibility':0,
+				'x' : a + 'px',
+            	'y' : b + 'px'
 			});
 		}
 	}
 	
-	pos_x += 200;
+	// pos_x += 200;
 
-	// 次の列へ移動する
-	if(pos_x >= 2800){
-		pos_x = init_pos_x;
-		pos_y += 150;
-	}
+	// // 次の列へ移動する
+	// if(pos_x >= 2800){
+	// 	pos_x = init_pos_x;
+	// 	pos_y += 150;
+	// }
 
 	// canvas-wrapの子要素（canvasの下の位置）にdivを挿入する
 	$('#canvas-wrap').append($(element).append(cross_element));
@@ -138,22 +158,82 @@ function createFusen(id,input){
 	$('.fusen').draggable({
 		containment: '#canvas', // canvas内でのみドラッグ可能
 		opacity: 0.3, // 移動中の透過率
-	 	revert: false // ドラッグ終了時に元の場所に戻さない
+	 	revert: false,
+	 	stop : function(event, ui){
+	 		console.log('Dropped!!');
+
+	 		// ドロップした付箋のposition(親要素からの座標)を取得
+	 		zahyo = $(this).position();
+
+			// uiにはhelperオブジェクトというものが渡され，dropした要素の情報が入っている
+	 		// http://stacktrace.jp/jquery/ui/interaction/draggable.html
+			
+			// ドロップした付箋のidを取得 
+			idName = ui.helper[0].id; // 付箋のid(◯◯_fusen)を取得
+	 		innerText = ui.helper[0].firstChild.data; // 付箋のテキストを取得
+
+			moveFusen(idName,innerText,zahyo);	 		
+
+			
+		 	} // ドラッグ終了時に元の場所に戻さない
 	});
 
 };
 
+function moveFusen(idName,input,zahyo){
+
+		_id = idName.substring(0, idName.indexOf("_") );
+
+			ds.set(_id, {
+				'content' : input,
+				'visibility':1,
+				'x' : zahyo.left + 'px',
+            	'y' : zahyo.top + 'px'
+		
+		});
+
+};
 
 $(function(){
 
+	// 読み込み時に
+	ds.stream().size(20).sort('desc').next(function(err,datas){
+		 for(var i=0;i < datas.length;i++){
+		createFusen(datas[i].id, datas[i].value.content,datas[i].value.x, datas[i].value.y);
+		console.log(datas[i].id, datas[i].value.content,datas[i].value.x, datas[i].value.y);
+		}
+
+	});
+
 	// データストアでpushイベントを検知したとき
 	ds.on('push',function(pushed){
-		createFusen(pushed.id, pushed.value.content)
+		createFusen(pushed.id, pushed.value.content, pushed.value.x,pushed.value.y)
 	});
 
 	// データストアでsetイベントを検知したとき
+
 	ds.on('set', function(set){
-		document.getElementById(set.id+"_fusen").style.visibility="hidden"; 
+		
+		vis = set.value.visibility;
+
+		console.log(vis);
+		switch(vis){
+			
+			case 0: //visible = 0
+				console.log('見えなくするよ！');
+				$('div#'+ set.id + '_fusen').css("display","none"); 			
+				break;
+
+			case 1: //visible = 1
+				$('div#'+ set.id + '_fusen').css("left", set.value.x);
+				$('div#'+ set.id + '_fusen').css("top" , set.value.y);
+				break;
+
+			default:
+				break;
+		}
+
+
 	});
 
 });
