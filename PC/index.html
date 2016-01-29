@@ -19,6 +19,8 @@
 
 
 <script type="text/javascript" src="js/src/input.js"></script>
+<script type="text/javascript" src="js/src/example.js"></script>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
 
@@ -46,36 +48,37 @@ $(function() {
 	<div id="button_area">
 		<button id="makeFusen" class="btn btn-success" onclick="fusenDisplay()">作成</button>
 		<button id="removeFusen" class="btn btn-success" onclick="allRemove()">クリア</button>
-	</div>
 
-	<p>作成　：Aキーでショートカット</p>
-	<p>クリア：Dキーでショートカット</p>
-
-	<button href="" id="capture_btn" class="btn btn-default" style="margin-bottom:10px;">
+		<button href="" id="captureBtn" class="btn btn-default">
 	canvasを保存する
  	</button>
+
+	</div>
+
+<!-- 	<p>作成　：Aキーでショートカット</p>
+	<p>クリア：Dキーでショートカット</p>
+ -->
 
 
 <!-- 	<form name="form1" action="./" method="post">
 		<input type="checkbox" name="hoge" />連続入力をONにする<br />
 	</form>
  -->
- 	<div>
+
+ 	<div id="checkArea">
 	 	<input type="checkbox" name ="conInput" value="on">連続入力をONにする
  	</div>
 
- 	<!-- <a id="download_btn" class="btn btn-default" href="#">ダウンロード</a>  -->
 
- 	<!-- <button onclick="clickFunc()">クリックサンプル</button> -->
 
 	<div id="canvas-wrap">
-	 	<canvas id="canvas" width="3000" height="3000"></canvas>
+	 	<canvas id="canvas"></canvas>
 	 	<!-- ここにdivが挿入される -->
 	</div>
 
 	</main>
 
-</div> <!-- page -->
+</div> <!--page -->
 
 
 </body> 

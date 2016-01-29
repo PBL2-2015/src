@@ -4,12 +4,14 @@
 
 // var i=1; //idインクリメント
 
-var initCanvasWidth = 2000;
-var initCanvasHeight = 2000;
+var initCanvasWidth = 1000;
+var initCanvasHeight = 1000;
 var init_pos_x = 50 + 'px';
 var init_pos_y = 50 + 'px';
 var pos_x = init_pos_x;
 var pos_y = init_pos_y;
+
+var dd = new Date();
 
 // MilkCocoaオブジェクトのインスタンスを取得
 var milkcocoa = new MilkCocoa('yieldijtvk6yv.mlkcca.com');
@@ -17,7 +19,7 @@ var milkcocoa = new MilkCocoa('yieldijtvk6yv.mlkcca.com');
 // データストアの作成
 var ds = milkcocoa.dataStore('fusen/message');
 
-// 付箋を全て削除する
+// データストアにある付箋データを全て削除する
 function allRemove(){
 	if(!confirm('削除してよろしいですか？')){
 		// キャンセル時
@@ -28,7 +30,15 @@ function allRemove(){
 		//　位置情報を初期化
 		pos_x = init_pos_x;
 		pos_y = init_pos_y;
-		canvas.height = initCanvasHeight;
+
+		ds.stream().size(20).sort('desc').next(function(err,datas){
+
+		for(var i=0;i < datas.length;i++){
+			ds.remove(datas[i].id);
+		}
+
+		});
+
 	}
 }
 	
@@ -37,9 +47,6 @@ function fusenDisplay(){
 	// 連続入力がONのとき１，OFFのとき0を返す
 	var checkCount = $(':checkbox[name="conInput"]:checked').length;
 
-	// canvasの設定
-	var canvas = document.getElementById("canvas");
-	var ctx = canvas.getContext("2d");
 
 	// ユーザがアイデアを入力する
 	var input = window.prompt("アイデアを入力してください(30文字以内)");
@@ -66,12 +73,12 @@ function fusenDisplay(){
             'y' : pos_y
     });
 
-	pos_x = pos_x + 200 + 'px';
+	pos_x = parseInt(pos_x) + 200 + 'px';
 
 	// 次の列へ移動する
-	if(pos_x >= 2800){
+	if(parseInt(pos_x) >= 800){
 		pos_x = init_pos_x;
-		pos_y += 150 + 'px';
+		pos_y = parseInt(pos_y) + 150 + 'px';
 	}
 
 	// 連続入力がONの時に入力を繰り返す
@@ -86,6 +93,10 @@ function createFusen(id,input,pos_x,pos_y){
 	// 連続入力がONのとき１，OFFのとき0を返す
 	var checkCount = $(':radio[name="conInput"]:checked').length;
 
+	// canvasの設定
+	var canvas = document.getElementById("canvas");
+	var ctx = canvas.getContext("2d");
+
 	// 付箋のdiv要素の作成 
 	var element = document.createElement('div');
 	element.id = id +"_fusen";
@@ -99,8 +110,8 @@ function createFusen(id,input,pos_x,pos_y){
 	cross_element.id = id +"_cross";
 	cross_element.className = 'cross';
 	cross_element.innerHTML = '☓';
-	cross_element.style.top = 5 + 'px'; 
-	cross_element.style.left = 130 + 'px';
+	cross_element.style.top = 4 + 'px'; 
+	cross_element.style.left = 125 + 'px';
 
 	// ☓ボタンをクリックした場合の操作
 
@@ -134,31 +145,20 @@ function createFusen(id,input,pos_x,pos_y){
 			ds.set(_id, {
 				'content' : text,
 				'visibility':0,
-				'x' : a + 'px',
-            	'y' : b + 'px'
+				'x' : a ,
+            	'y' : b 
 			});
 		}
 	}
 	
-	// pos_x += 200;
-
-	// // 次の列へ移動する
-	// if(pos_x >= 2800){
-	// 	pos_x = init_pos_x;
-	// 	pos_y += 150;
-	// }
-
 	// canvas-wrapの子要素（canvasの下の位置）にdivを挿入する
 	$('#canvas-wrap').append($(element).append(cross_element));
-
-	// idを増やす
-	// i = i + 1;
 
 	// 付箋をドラッグ可能にする
 	$('.fusen').draggable({
 		containment: '#canvas', // canvas内でのみドラッグ可能
 		opacity: 0.3, // 移動中の透過率
-	 	revert: false,
+	 	revert: false,// ドラッグ終了時に元の場所に戻さない
 	 	stop : function(event, ui){
 	 		console.log('Dropped!!');
 
@@ -173,9 +173,8 @@ function createFusen(id,input,pos_x,pos_y){
 	 		innerText = ui.helper[0].firstChild.data; // 付箋のテキストを取得
 
 			moveFusen(idName,innerText,zahyo);	 		
-
 			
-		 	} // ドラッグ終了時に元の場所に戻さない
+		 	} 
 	});
 
 };
@@ -189,7 +188,6 @@ function moveFusen(idName,input,zahyo){
 				'visibility':1,
 				'x' : zahyo.left + 'px',
             	'y' : zahyo.top + 'px'
-		
 		});
 
 };
@@ -200,9 +198,7 @@ $(function(){
 	ds.stream().size(20).sort('desc').next(function(err,datas){
 		 for(var i=0;i < datas.length;i++){
 		createFusen(datas[i].id, datas[i].value.content,datas[i].value.x, datas[i].value.y);
-		console.log(datas[i].id, datas[i].value.content,datas[i].value.x, datas[i].value.y);
 		}
-
 	});
 
 	// データストアでpushイベントを検知したとき
@@ -216,28 +212,23 @@ $(function(){
 		
 		vis = set.value.visibility;
 
-		console.log(vis);
+		// visibleが変更されていたら削除，visibleが変わっていなかったら付箋移動
 		switch(vis){
 			
 			case 0: //visible = 0
 				console.log('見えなくするよ！');
 				$('div#'+ set.id + '_fusen').css("display","none"); 			
 				break;
-
 			case 1: //visible = 1
 				$('div#'+ set.id + '_fusen').css("left", set.value.x);
 				$('div#'+ set.id + '_fusen').css("top" , set.value.y);
 				break;
-
 			default:
 				break;
 		}
-
-
 	});
 
 });
-
 
 // キーボードショートカット
 $(document).keydown(function(e){
@@ -251,8 +242,18 @@ $(document).keydown(function(e){
 	}
 });
 
+$(function(){
+	// ユーザーエージェントの設定
+	if (navigator.userAgent.indexOf('iPhone') > 0){
+		$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=0.5,minimum-scale=0.2,maximum-scale=1.5,user-scalable=yes" />\n'));
+	}else if(navigator.userAgent.indexOf('Android') > 0){
+		
+		$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0.2,maximum-scale=1.5,user-scalable=yes" />\n'));
+	}
+});
+
 // スクリーンショット機能
-$(document).on('click','#capture_btn', function(){
+$(document).on('click','#captureBtn', function(){
 
 	var element = $('#canvas-wrap')[0];
 
@@ -262,7 +263,11 @@ $(document).on('click','#capture_btn', function(){
 
 	// ダウンロードリンクの生成
       	var downloadLink = document.createElement("a");
-     	downloadLink.download = 'sample.png';
+
+
+      	getTime();
+
+     	downloadLink.download = date + '_pbl2.png';
      	downloadLink.href = imgData;
      	downloadLink.click();
 
@@ -270,14 +275,27 @@ $(document).on('click','#capture_btn', function(){
 
 });
 
-$(function(){
-	if (navigator.userAgent.indexOf('iPhone') > 0){
-		$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=0.5,minimum-scale=0.2,maximum-scale=1.5,user-scalable=yes" />\n'));
-	}else if(navigator.userAgent.indexOf('Android') > 0){
-		
-		$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0.2,maximum-scale=1.5,user-scalable=yes" />\n'));
-	}
-});
+
+// 日付の取得
+function getTime(){
+  
+	var toDoubleDigits = function(num) {
+  	num += "";
+  	if (num.length === 1) {
+  	 	num = "0" + num;
+  	}
+ 	return num;     
+	};
+
+	year = dd.getFullYear();
+	month = toDoubleDigits(dd.getMonth() + 1);
+	day = toDoubleDigits(dd.getDate());
+
+	date = year + "" +  month + "" + day;
+
+	return date;
+}
+
 
 
 
