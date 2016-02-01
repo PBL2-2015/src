@@ -47,7 +47,6 @@ function fusenDisplay(){
 	// 連続入力がONのとき１，OFFのとき0を返す
 	var checkCount = $(':checkbox[name="conInput"]:checked').length;
 
-
 	// ユーザがアイデアを入力する
 	var input = window.prompt("アイデアを入力してください(30文字以内)");
 
@@ -105,6 +104,69 @@ function createFusen(id,input,pos_x,pos_y){
 	element.style.top = pos_y ;
 	element.style.left = pos_x ;
 
+	console.log(element.id);
+
+	$(".fusen").draggable({
+        containment: "#canvas",
+        opacity: .3,
+        revert: false,
+        stop: function(event, ui) {
+            console.log("Dropped!!");
+            zahyo = $(this).position();
+            idName = ui.helper[0].id;
+            innerText = ui.helper[0].firstChild.data;
+            moveFusen(idName, innerText, zahyo)
+        }
+    })
+
+	
+	// 付箋をドラッグ可能にする
+	// http://stacktrace.jp/jquery/ui/interaction/draggable.html
+	
+	// $(".fusen").draggable({
+	// 	containment: '#canvas', // canvas内でのみドラッグ可能
+	// 	// opacity: 0.3, // 移動中の透過率
+	//  	revert: false,// ドラッグ終了時に元の場所に戻さない
+
+	 	// start: function(event, ui){
+	 	// 	var state = 1;
+	 	// 	// $(this).css('background-color', 'red');
+	 	// 	// $(this).css('user-select', 'none');
+	 	// 	console.log('ロックしたよ');
+
+	 	// 	idName = ui.helper[0].id;
+
+			// _id = idName;
+
+			// console.log(idName);
+	 	// 	ds.send({
+	 	// 		'idName': idName
+	 	// 	});
+
+			
+	 	// },
+		
+		// stop : function(event, ui){
+	 // 		console.log('Dropped!!');
+	 // 		// $(this).css('background-color', '#ffdd34');
+
+		//  		$(this).draggable({disabled:false});
+
+	 // 		// $(this).draggable({disabled:false});
+
+		// 	// uiにはhelperオブジェクトというものが渡され，dropした要素の情報が入っている
+		// 	// http://stacktrace.jp/jquery/ui/interaction/draggable.html
+
+		// 	console.log('_id = ' + _id);
+
+		// 	innerText = ui.helper[0].firstChild.data; // 付箋のテキストを取得
+		// 	zahyo = $(this).position();
+
+		// 	moveFusen(_id,innerText,zahyo);	 		
+		
+		//  }
+	// });
+
 	// 削除ボタン(☓ボタン)のdiv要素の作成
 	var cross_element = document.createElement('div');
 	cross_element.id = id +"_cross";
@@ -129,7 +191,6 @@ function createFusen(id,input,pos_x,pos_y){
 			//$(this).parent().remove(); //remove使う方法
 
 			// pushされたときに付加されたid（_crossより前の文字列）を切り取る
-
 			a = this.parentNode.style.left; // 付箋のx座標
 			b = this.parentNode.style.top; // 付箋のy座標
 
@@ -146,48 +207,23 @@ function createFusen(id,input,pos_x,pos_y){
 				'content' : text,
 				'visibility':0,
 				'x' : a ,
-            	'y' : b 
+            	'y' : b ,
 			});
 		}
 	}
 	
 	// canvas-wrapの子要素（canvasの下の位置）にdivを挿入する
 	$('#canvas-wrap').append($(element).append(cross_element));
-
-	// 付箋をドラッグ可能にする
-	$('.fusen').draggable({
-		containment: '#canvas', // canvas内でのみドラッグ可能
-		opacity: 0.3, // 移動中の透過率
-	 	revert: false,// ドラッグ終了時に元の場所に戻さない
-	 	stop : function(event, ui){
-	 		console.log('Dropped!!');
-
-	 		// ドロップした付箋のposition(親要素からの座標)を取得
-	 		zahyo = $(this).position();
-
-			// uiにはhelperオブジェクトというものが渡され，dropした要素の情報が入っている
-	 		// http://stacktrace.jp/jquery/ui/interaction/draggable.html
-			
-			// ドロップした付箋のidを取得 
-			idName = ui.helper[0].id; // 付箋のid(◯◯_fusen)を取得
-	 		innerText = ui.helper[0].firstChild.data; // 付箋のテキストを取得
-
-			moveFusen(idName,innerText,zahyo);	 		
-			
-		 	} 
-	});
-
+	
 };
 
-function moveFusen(idName,input,zahyo){
+function moveFusen(id,input,zahyo){
 
-		_id = idName.substring(0, idName.indexOf("_") );
-
-			ds.set(_id, {
-				'content' : input,
-				'visibility':1,
-				'x' : zahyo.left + 'px',
-            	'y' : zahyo.top + 'px'
+		ds.set(id, {
+			'content' : input,
+			'visibility':1,
+			'x' : zahyo.left + 'px',
+            'y' : zahyo.top + 'px'
 		});
 
 };
@@ -215,11 +251,11 @@ $(function(){
 		// visibleが変更されていたら削除，visibleが変わっていなかったら付箋移動
 		switch(vis){
 			
-			case 0: //visible = 0
+			case 0: //visible = 0（削除）
 				console.log('見えなくするよ！');
 				$('div#'+ set.id + '_fusen').css("display","none"); 			
 				break;
-			case 1: //visible = 1
+			case 1: //visible = 1 (移動後)
 				$('div#'+ set.id + '_fusen').css("left", set.value.x);
 				$('div#'+ set.id + '_fusen').css("top" , set.value.y);
 				break;
@@ -227,6 +263,11 @@ $(function(){
 				break;
 		}
 	});
+
+	// ds.on('send',function(sent){
+	// 	console.log(sent.value.idName);
+	// 	$('#' + sent.value.idName).css('background-color, blue');
+	// });
 
 });
 
@@ -263,7 +304,6 @@ $(document).on('click','#captureBtn', function(){
 
 	// ダウンロードリンクの生成
       	var downloadLink = document.createElement("a");
-
 
       	getTime();
 
