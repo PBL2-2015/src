@@ -34,7 +34,7 @@ h1{
     clear:both;
 }
 
-button#makeFusen,#removeFusen,#captureBtn{
+button#createFusen,#removeFusen,#captureBtn{
     font-size: 16pt;
     display: inline;
     margin-right: 5px;
@@ -108,3 +108,10 @@ canvas{
 	font-weight: bold;
 	margin: 2px 0;
 }
+
+#backImage{
+	position: absolute;
+	top:0px;
+	left: 0px;
+	width: 150px;
+	height: 100px;}
