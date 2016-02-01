@@ -94,6 +94,8 @@ canvas{
 	height: 20px;
 	cursor: pointer;
 	background: transparent;
+	top:4px;
+	left: 125px;
 
 }
 

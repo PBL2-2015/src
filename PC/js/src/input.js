@@ -109,8 +109,6 @@ function redrawFusen(id,input,pos_x,pos_y){
 	cross_element.id = id +"_cross";
 	cross_element.className = 'cross';
 	cross_element.innerHTML = '☓';
-	cross_element.style.top = 4 + 'px'; 
-	cross_element.style.left = 125 + 'px';
 
 	// ☓ボタンをクリックした場合の操作
 	cross_element.onclick = function(){
