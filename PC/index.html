@@ -14,25 +14,9 @@
 <script type="text/javascript" src="js/lib/jquery-2.2.0.min.js"></script>
 <script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
 <script src="js/lib/jquery.ui.touch-punch.min.js"></script>
-
 <script src="https://cdn.mlkcca.com/v2.0.0/milkcocoa.js"></script>
-
-
 <script type="text/javascript" src="js/src/input.js"></script>
-<script type="text/javascript" src="js/src/example.js"></script>
-
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
-
-
-<script>
-$(function() {
-  $('#canvas').droppable();
-});
-
-
-
-</script>
 
 
 <title>Brasticky</title>
@@ -40,7 +24,6 @@ $(function() {
 </head>
 <body>
 
-<div id="page">
 
 	<header>
 		<h1>Brasticky</h1>
@@ -48,16 +31,16 @@ $(function() {
 
 	<main>
 
-	<div id="button_area">
+
+	<div id="btnArea">
 		<button id="createFusen" class="btn btn-success" onclick="createFusen()">作成</button>
 		<button id="removeFusen" class="btn btn-success" onclick="allRemove()">クリア</button>
 
 		<button href="" id="captureBtn" class="btn btn-default">
-	canvasを保存する
- 	</button>
+		canvasを保存する
+ 		</button>
 
 	</div>
-
 <!-- 	<p>作成　：Aキーでショートカット</p>
 	<p>クリア：Dキーでショートカット</p>
  -->
@@ -72,16 +55,33 @@ $(function() {
 	 	<input type="checkbox" name ="conInput" value="on">連続入力をONにする
  	</div>
 
-
-
 	<div id="canvas-wrap">
-	 	<canvas id="canvas"></canvas>
+	 	<canvas id="canvas" width="1000px;" height="1000px;"></canvas>
+	 	<!-- <div id='garbageArea'>Drop unnecessary fusen</div> -->
 	 	<!-- ここにdivが挿入される -->
 	</div>
 
+	<div id="btnAreaForSp">
+	<ul>
+		<li><button id="createFusenSp" class="btn btn-success btn" onclick="createFusen()">作成</button></li>
+		<li><button id="removeFusenSp" class="btn btn-success btn" onclick="allRemove()">クリア</button></li>
+		<li><button href="" id="captureBtnSp" class="btn btn-default btn">canvasを保存する</button></li>
+	</ul>
+	</div>
 	</main>
 
-</div> <!--page -->
+
+
+
+<script>
+$(function() {
+  $('#canvas').droppable();
+});
+
+var ttt = $('#btnAreaForSp').width();
+alert(ttt);
+
+</script>
 
 
 </body> 

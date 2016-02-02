@@ -223,16 +223,58 @@ $(function(){
 		backImage.src = 'image/moving.png';
 		backImage.id = 'backImage';
 		$('div#'+ sent.value.idName).append($(backImage));
-
-		
 	});
 
 	// 削除時に非表示にさせる
 	ds.on('remove',function(removed){
-		$('div#'+ removed.id + '_fusen').css("display","none"); 
-		
-
+		$('div#'+ removed.id + '_fusen').css("display","none");
+		console.log('非表示にしたよ!');
 	});
+
+
+	// ユーザーエージェントの設定
+	// レイアウト https://blogs.adobe.com/creativestation/web-design-with-css-flexbox-menu
+	if (navigator.userAgent.indexOf('iPhone') > 0){
+		
+		$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0.2,maximum-scale=1.2,user-scalable=yes" />\n'));
+		$('#btnArea').css("display","none");
+		$('#btnAreaForSp > ul').css({
+			"display":"inline"
+			// ,
+			// "display":"flex",
+			// "display":"webkit-flex",
+			// "justify-content":"space-around",
+ 		// 	"-webkit-justify-content":"space-around"
+		});
+		 hsize = $(window).height();
+		 $("main").css("height", hsize + "px");
+		 $(window).resize(function () {
+			hsize = $(window).height();
+			$("main").css("height", hsize + "px");
+		});
+
+
+	}else if(navigator.userAgent.indexOf('Android') > 0){
+		$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0.2,maximum-scale=1.2,user-scalable=yes" />\n'));
+	
+		$('#btnArea').css("display","none");
+		$('#btnAreaForSp > ul').css({
+			"display":"inline"
+			// ,
+			// "display":"flex",
+			// "display":"webkit-flex",
+			// "justify-content":"space-around",
+ 		// 	"-webkit-justify-content":"space-around"
+		});
+
+		 hsize = $(window).height();
+		 $("main").css("height", hsize + "px");
+		 $(window).resize(function () {
+			hsize = $(window).height();
+			$("main").css("height", hsize + "px");
+		});
+	
+	}
 
 });
 
@@ -248,18 +290,8 @@ $(document).keydown(function(e){
 	}
 });
 
-$(function(){
-	// ユーザーエージェントの設定
-	if (navigator.userAgent.indexOf('iPhone') > 0){
-		$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=0.5,minimum-scale=0.2,maximum-scale=1.5,user-scalable=yes" />\n'));
-	}else if(navigator.userAgent.indexOf('Android') > 0){
-		
-		$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0.2,maximum-scale=1.5,user-scalable=yes" />\n'));
-	}
-});
-
 // スクリーンショット機能
-$(document).on('click','#captureBtn', function(){
+$(document).on('click','#captureBtn, #captureBtnSp', function(){
 
 	var element = $('#canvas-wrap')[0];
 
