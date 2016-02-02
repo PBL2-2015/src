@@ -150,11 +150,9 @@ li{
 
 
 #createFusenSp,#removeFusenSp,#captureBtnSp{
-	
 	display: block;
 	font-size: 40px;
 	width: 100%;
-
 }
 
 @font-face {
