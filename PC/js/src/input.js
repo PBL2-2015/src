@@ -1,13 +1,13 @@
 
+
+
 // milkcocoaリファレンス
 // https://mlkcca.com/document/api-js.html
 
 // var i=1; //idインクリメント
 
-var initCanvasWidth = 1000;
-var initCanvasHeight = 1000;
 var init_pos_x = 50 + 'px';
-var init_pos_y = 50 + 'px';
+var init_pos_y = 100 + 'px';
 var pos_x = init_pos_x;
 var pos_y = init_pos_y;
 
@@ -187,6 +187,35 @@ function moveFusen(id,input,zahyo){
 
 };
 
+// iPhone/iPadでダブルタップをJavaScriptで実装する
+// http://blog.webcreativepark.net/2010/08/16-110311.html
+// 座標について
+// http://d.hatena.ne.jp/sandai/20100518/p1
+// http://qiita.com/i47_rozary/items/6134b66921299a2e5806
+
+function canvasTap(e){
+
+	var pos_x = pos_y = 0;
+    pos_x = e.pageX;
+    pos_y = e.pageY;
+ 
+ 	console.log(pos_x,pos_y);
+
+	// $('canvas').data("dblTap",false).click(function(){
+	if($(this).data("dblTap")){
+		//ダブルタップ時の命令
+
+		$(this).data("dblTap",false);
+	}else{
+		$(this).data("dblTap",true);
+	}
+
+	setTimeout(function(){
+		$('canvas').data("dblTap",false);
+	},300);
+	// });
+};
+
 $(function(){
 
 	// 読み込み時にデータストアに格納されているデータを描画する
@@ -213,8 +242,6 @@ $(function(){
 	});
 
 	ds.on('send', function(sent){
-		// $('div#'+ sent.value.idName).css("background-color", "red");
-		$('div#'+ sent.value.idName).css("background-color", "red");
 		// イベントを無効化するcss(ロック)
 		$('div#'+ sent.value.idName).css("pointer-events", "none");
 	
@@ -232,50 +259,13 @@ $(function(){
 	});
 
 
-	// ユーザーエージェントの設定
-	// レイアウト https://blogs.adobe.com/creativestation/web-design-with-css-flexbox-menu
-	if (navigator.userAgent.indexOf('iPhone') > 0){
-		
-		$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0.2,maximum-scale=1.2,user-scalable=yes" />\n'));
-		$('#btnArea').css("display","none");
-		$('#btnAreaForSp > ul').css({
-			"display":"inline"
-			// ,
-			// "display":"flex",
-			// "display":"webkit-flex",
-			// "justify-content":"space-around",
- 		// 	"-webkit-justify-content":"space-around"
-		});
-		 hsize = $(window).height();
-		 $("main").css("height", hsize + "px");
-		 $(window).resize(function () {
-			hsize = $(window).height();
-			$("main").css("height", hsize + "px");
-		});
 
+	// canvasをタッチ(スマホ)orクリック(PC)されたときに，canvasTap関数を呼び出す
 
-	}else if(navigator.userAgent.indexOf('Android') > 0){
-		$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0.2,maximum-scale=1.2,user-scalable=yes" />\n'));
+	// canvas.addEventListener('touchstart', canvasTap, false);
+	// canvas.addEventListener('click', canvasTap, false);
+
 	
-		$('#btnArea').css("display","none");
-		$('#btnAreaForSp > ul').css({
-			"display":"inline"
-			// ,
-			// "display":"flex",
-			// "display":"webkit-flex",
-			// "justify-content":"space-around",
- 		// 	"-webkit-justify-content":"space-around"
-		});
-
-		 hsize = $(window).height();
-		 $("main").css("height", hsize + "px");
-		 $(window).resize(function () {
-			hsize = $(window).height();
-			$("main").css("height", hsize + "px");
-		});
-	
-	}
-
 });
 
 // キーボードショートカット
@@ -284,9 +274,9 @@ $(document).keydown(function(e){
 		case 65: // Aのキーコード
 			$('#createFusen').click();
 			break;
-		case 68: // Dのキーコード
-			$('#removeFusen').click();
-			break;
+		// case 68: // Dのキーコード
+		// 	$('#removeFusen').click();
+		// 	break;
 	}
 });
 
@@ -294,6 +284,7 @@ $(document).keydown(function(e){
 $(document).on('click','#captureBtn, #captureBtnSp', function(){
 
 	var element = $('#canvas-wrap')[0];
+
 
     html2canvas(element, {onrendered:function(canvas) {
 
@@ -311,6 +302,7 @@ $(document).on('click','#captureBtn, #captureBtnSp', function(){
     }});
 
 });
+
 
 
 // 日付の取得
@@ -335,4 +327,48 @@ function getTime(){
 
 
 
+$(window).load(function(){
+  container = $('#canvas-wrap');
+  canvas = $('canvas');
+
+  test = window.innerWidth;
+
+  console.log(test);
+
+
+
+  function resizeCanvas(e){
+  	
+    canvas.outerWidth(container.width());
+    canvas.outerHeight(container.width() * 1.2);  //1.0は適宜変更
+  
+  }
+
+  resizeCanvas();
+
+  $(window).on('resize', resizeCanvas());
+
+});
+
+
+// ユーザーエージェントの設定
+// レイアウト https://blogs.adobe.com/creativestation/web-design-with-css-flexbox-menu
+
+var ua = navigator.userAgent;
+
+// if (ua.indexOf('iPhone') > 0){		
+// 	$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.2,user-scalable=yes" />\n'));		
+// }else if(ua.indexOf('Android') > 0){
+// 	$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0.2,maximum-scale=1.2,user-scalable=yes" />\n'));
+// }
+
+if (ua.indexOf('iPhone') > 0 || ua.indexOf('iPod') > 0 || (ua.indexOf('Android') > 0) && (ua.indexOf('Mobile') > 0) || ua.indexOf('Windows Phone') > 0) {
+	document.write('<link rel="stylesheet" type="text/css" href="css/mobile.css">');
+}else if(ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0){
+	document.write('<link rel="stylesheet" type="text/css" href="css/tab.css">');
+	}else{
+	document.write('<link rel="stylesheet" type="text/css" href="css/pc.css">');
+}
+
+	
 

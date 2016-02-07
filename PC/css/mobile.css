@@ -1,0 +1,160 @@
+
+/*
+#################################
+モバイル用CSS
+- PC用のレイアウトをdisplay:noneに変更
+- 付箋サイズ等をスマホ向けに小さく表示
+- 入力ボタンをページ下部に固定
+#################################
+*/
+html{
+    -webkit-text-size-adjust:100%;
+    -ms-text-size-adjust:100%
+}
+
+body{
+	margin: 0;
+	padding: 0 0 50px 0;
+	width: 1200px;
+	-webkit-text-size-adjust: 100%;
+	/*position: relative;*/
+	/*background: #f4cc70;*/
+
+}
+
+header{
+	/*position: absolute;*/
+	padding-left: 20px;
+	z-index:5;
+	display:flex;
+	display:webkit-flex;
+	justify-content:flex-start;
+	-webkit-justify-content:flex-start;
+	background: wheat;
+
+}
+
+h1{
+    font-size: 30pt;
+    font-weight: bold;
+    color: orange;
+    /*font-family: 'Helvetica, Meiryo';*/
+    font-family: 'allura';
+    letter-spacing: 0.3em;
+}
+
+
+#checkArea{
+	font-weight: bold;
+	margin: 2px 0;
+}
+
+button#createFusen,#removeFusen,#captureBtn{
+    font-size: 16pt;
+    display: inline;
+    margin-right: 5px;
+    padding: 10px 20px;
+}
+
+
+#canvas-wrap{
+	/*position: relative;*/
+	width: 1200px;
+	/*height: 2000px;*/
+}
+
+
+canvas{
+	margin-top:72px; 
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	border: 1px solid gray;
+	position: absolute;
+	/*margin-top: 67px;*/
+	background: #ffffff; /* white */
+	z-index: -1;
+}
+
+.fusen{
+	position: absolute;
+	text-align: center; 
+	color: black;
+	font-size: 13px;
+	font-weight: bold;
+	font-family: メイリオ, sans-serif;
+	background: #ffdd34;
+	/*padding: 22px 5px 3px;*/
+	z-index: 400;
+	width: 80px;
+	height: 50px;
+	border: 1px solid #f4cc70;
+}
+
+.cross{
+	position: absolute;
+	text-align: center; 
+	color: black;
+	font-size: 8px;
+	font-family: メイリオ, sans-serif;
+	background: #ffdd34;
+	padding: 0.5px;
+	z-index: 500;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	background: transparent;
+	top:4px;
+	left: 60px;
+
+}
+
+#backImage{
+	position: absolute;
+	top:0px;
+	left: 0px;
+	width: 80px;
+	height: 50px;
+}
+
+#btnArea{
+  display: none;
+}
+
+#btnAreaSp{	
+  position:absolute;
+  bottom: 50px; /* ページ下部に配置 */
+  z-index: 5;
+  /*height: 50px;*/
+  margin: auto;
+  padding-left: 20px;
+
+}
+
+/* Flexboxについて
+/*http://liginc.co.jp/web/html-css/css/21024*/
+#btnAreaSp ul {
+  font-size: 0;
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0;
+  display:flex;
+  display:webkit-flex;
+  justify-content:flex-start;
+  -webkit-justify-content:flex-start;
+}
+
+#btnAreaSp li{
+  text-align: center;
+  display: block;
+}
+
+#btnAreaSp button{
+	font-size: 40pt;
+}
+
+@font-face {
+   font-family: allura;
+   src: url('../font/Allura-Regular.otf') format("opentype");
+}
