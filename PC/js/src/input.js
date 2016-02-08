@@ -251,23 +251,48 @@ $(function(){
 
 	// データストアでsetイベントを検知したとき
 	ds.on('set', function(set){
+
+
+
 		$('div#'+ set.id + '_fusen').css("left", set.value.x);
 		$('div#'+ set.id + '_fusen').css("top" , set.value.y);
 		$('div#'+ set.id + '_fusen').css("background-color", "#ffdd34");
 		// イベントを有効な状態に戻す 
-		$('div#'+ set.id + '_fusen').css("pointer-events", "auto");
-		$('#backImage').remove();
+		$('div#'+ set.id + '_fusen').css({
+			'text-indent':'',
+			'white-space':'',
+			'overflow':'',
+			'pointer-events':'auto',// イベントを無効化するcss(ロック)
+			'background-color':''
+		});
+
+
+		// $('#backImage').remove();
+	
 	});
 
 	ds.on('send', function(sent){
-		// イベントを無効化するcss(ロック)
-		$('div#'+ sent.value.idName).css("pointer-events", "none");
 	
+		// 文字を非表示にする
+		// http://ss-complex.com/2013/12/css-cleartext/
+
+		$('div#'+ sent.value.idName).css({
+			// 'text-indent':'100%',
+			// 'white-space':'nowrap',
+			// 'overflow':'hidden',
+			'pointer-events':'none',// イベントを無効化するcss(ロック)
+			'background-color':'red',
+		});
+
 		// 動かし中画像を表示
-		var backImage = document.createElement('img');
-		backImage.src = 'image/moving.png';
-		backImage.id = 'backImage';
-		$('div#'+ sent.value.idName).append($(backImage));
+
+		// var backImage = document.createElement('img');
+		// backImage.src = 'image/moving.png';
+		// backImage.id = 'backImage';
+		// $('div#'+ sent.value.idName).append($(backImage));
+
+
+
 	});
 
 	// 削除時に非表示にさせる
