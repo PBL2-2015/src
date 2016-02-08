@@ -17,25 +17,27 @@ body{
 	-webkit-text-size-adjust: 100%;
 	/*position: relative;*/
 	/*background: #f4cc70;*/
+	background-image: url("../image/backPic.png");
+    background-size: 64px 64px;
+
 }
 
 header{
 	position: relative;
 	z-index:5;
-	padding-left: 20px;
-	z-index:5;
+	padding-left: 10px;
 	display:flex;
 	display:webkit-flex;
 	justify-content:flex-start;
 	-webkit-justify-content:flex-start;
-	background: wheat;
+	height: 80px;
 }
 
 h1{
     font-size: 28pt;
-    /*font-weight: bold;*/
+    font-weight: bold;
     color: black;
-    /*font-family: 'Helvetica, Meiryo';*/
+    font-family: 'Helvetica, Meiryo';
     font-family: 'allura';
     letter-spacing: 0.3em;
     display: block;
@@ -45,41 +47,24 @@ h1{
 	display: block;
 	font-weight: bold;	
 	padding-top: 30px;
+	white-space: nowrap;
 }
 
-#btnArea{
-/*	padding-top: 10px;
-*/
-}
-
-
-button#createFusen,#removeFusen,#captureBtn{
-    font-size: 18pt;
-    margin-right: 5px;
-    padding: 15px 24px;
-}
 
 #canvas-wrap{
-	/*height: 100%;*/
-	width: 1000px;
+	width:  960px;
+	height: 960px;
 	position: relative;
 	top:0;
 	left:0;
-	/*position: fixed;*/
 }
 
 canvas{
-	height: 100%;
-	width: 100%;
-	border: 1px solid gray;
-	/*position: absolute;*/
 	position:relative;
 	top: 0px;
 	left: 0px;
-	/*background: #ffffff; /* white */
-
 	z-index:1;
-	/*margin: -50px;*/
+	border: 1px solid gray;
 }
 
 .fusen{
@@ -124,41 +109,34 @@ canvas{
 	height: 100px;
 }
 
-#btnAreaSp{
+
+#btnArea{
+  display:flex;
+  display:webkit-flex;
+  justify-content:space-around;
+  -webkit-justify-content:space-around;
+}
+
+#btnArea button{
+    font-size: 18pt;
+    height: 60px;
+    margin: 10px 5px;
+    /*margin-right: 5px;*/
+    /*padding: 15px 24px;*/
+}
+
+
+#btnAreaSp button{
 display: none;
 }
 
-ul {
-  font-size: 0;
-  list-style-type: none;
-  margin: 0;
-  padding-left: 0;
-  z-index: 500;
-  display: inline;
-  display:flex;
-  display:webkit-flex;
-/*  justify-content:space-around;
-  -webkit-justify-content:space-around;
-*/}
-
-li{
-  text-align: center;
-  display: block;
-  z-index: 500;
-
- }  
-
-#createFusenSp,#removeFusenSp,#captureBtnSp{
-	display: block;
-	font-size: 20px;
-}
 
 @font-face {
    font-family: allura;
    src: url('../font/Allura-Regular.otf') format("opentype");
 }
 
-/*@media only screen and (max-device-width : 480px) {*/
+/*@media only screen and (max-device-width : 480px) {
 /* スマートフォンだけ以下を適用 */
   /*	
 	#page{

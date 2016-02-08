@@ -26,9 +26,8 @@
 </head>
 <body>
 
-	<!-- <div id="canvas-wrap"> -->
-
 		<header>
+
 		<h1>Brasticky</h1>
 
  		<div id="checkArea">
@@ -36,43 +35,32 @@
  		</div>
 
 		<div id="btnArea">
-
-			<ul>
-				<li><button id="createFusen" class="btn btn-success" onclick="createFusen()">作成</button></li>
-				<li><button id="removeFusen" class="btn btn-success" onclick="allRemove()">クリア</button></li>
-				<li><button href="" id="captureBtn" class="btn btn-default">canvasを保存する</button></li>
-			</ul>
-
+			<button id="createFusen" class="btn btn-success" onclick="createFusen()">作成</button>
+			<button id="removeFusen" class="btn btn-success" onclick="allRemove()">クリア</button>
+			<button href="" id="captureBtn" class="btn btn-default">canvasを保存する</button>
 		</div>
 
 		</header>
 
 		 <!-- <canvas id="canvas" width="1000px;" height="1000px;"></canvas> -->
 		 <div id="canvas-wrap">
-		 <canvas id="canvas"></canvas>
-
-		 <div id="btnAreaSp">
-		 <ul>
-			<li><button id="createFusen" class="btn btn-success btn" onclick="createFusen()">作成</button></li>
-			<li><button id="removeFusen" class="btn btn-success btn" onclick="allRemove()">クリア</button></li>
-			<li><button href="" id="captureBtn" class="btn btn-default btn">canvasを保存する</button></li>
-		 </ul>
-		 </div>
+		 <canvas id="canvas" width="980px;" height="980px;"></canvas>
 
 		 </div>
 
 
-	<!-- </div>wrap -->
-	
-
-	<!-- </main> -->
-
+		<div id="btnAreaSp">
+			<button id="createFusen" class="btn btn-success btn" onclick="createFusen()">作成</button>
+			<button id="removeFusen" class="btn btn-success btn" onclick="allRemove()">クリア</button>
+			<button href="" id="captureBtn" class="btn btn-default btn">canvasを保存する</button>
+		 </div>
 
 <script>
 $(function() {
   $('#canvas').droppable();
 });
 
+// ttt = canvas.height;
 
 // alert(ttt);
 

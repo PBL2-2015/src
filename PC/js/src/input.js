@@ -6,11 +6,11 @@
 
 var ua = navigator.userAgent;
 
-// if (ua.indexOf('iPhone') > 0){		
-// 	$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.2,user-scalable=yes" />\n'));		
-// }else if(ua.indexOf('Android') > 0){
-// 	$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0.2,maximum-scale=1.2,user-scalable=yes" />\n'));
-// }
+if (ua.indexOf('iPhone') > 0){		
+	$("head").append($('<meta name="viewport" content="width=980px,initial-scale=1.0,minimum-scale=0.2,maximum-scale=1.2,user-scalable=yes" />\n'));		
+}else if(ua.indexOf('Android') > 0){
+	$("head").append($('<meta name="viewport" content="width=980px,initial-scale=1.0,minimum-scale=0.2,maximum-scale=1.2,user-scalable=yes" />\n'));
+}
 
 if (ua.indexOf('iPhone') > 0 || ua.indexOf('iPod') > 0 || (ua.indexOf('Android') > 0) && (ua.indexOf('Mobile') > 0) || ua.indexOf('Windows Phone') > 0) {
 	document.write('<link rel="stylesheet" type="text/css" href="css/mobile.css">');
@@ -343,6 +343,31 @@ function getTime(){
 	return date;
 }
 
+// PBL2ではリサイズは対象外
+
+
+
+// $(window).load(function(){
+//   container = $('#canvas-wrap');
+//   canvas = $('canvas');
+
+//   test = window.innerWidth;
+
+//   console.log(test);
+
+//   function resizeCanvas(e){
+  	
+//     canvas.outerWidth(container.width());
+//     canvas.outerHeight(container.width() * 1.2);  //1.0は適宜変更
+  
+//   }
+
+//   resizeCanvas();
+
+//   $(window).on('resize', resizeCanvas());
+
+// });
+
 $(window).load(function(){
   container = $('#canvas-wrap');
   canvas = $('canvas');
@@ -351,16 +376,16 @@ $(window).load(function(){
 
   console.log(test);
 
-  function resizeCanvas(e){
+//   function resizeCanvas(e){
   	
-    canvas.outerWidth(container.width());
-    canvas.outerHeight(container.width() * 1.2);  //1.0は適宜変更
+//     canvas.outerWidth(container.width());
+//     canvas.outerHeight(container.width() * 1.2);  //1.0は適宜変更
   
-  }
+  // }
 
-  resizeCanvas();
+//   resizeCanvas();
 
-  $(window).on('resize', resizeCanvas());
+//   $(window).on('resize', resizeCanvas());
 
 });
 
