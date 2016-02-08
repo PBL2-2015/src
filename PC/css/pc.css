@@ -57,13 +57,14 @@ button#createFusen,#removeFusen,#captureBtn{
     font-size: 18pt;
     margin-right: 5px;
     padding: 15px 24px;
-
-
 }
 
 #canvas-wrap{
 	/*height: 100%;*/
 	width: 1000px;
+	position: relative;
+	top:0;
+	left:0;
 	/*position: fixed;*/
 }
 
@@ -72,11 +73,10 @@ canvas{
 	width: 100%;
 	border: 1px solid gray;
 	/*position: absolute;*/
-	position: absolute;
+	position:relative;
 	top: 0px;
 	left: 0px;
 	/*background: #ffffff; /* white */
-	background: -webkit-linear-gradient(0deg,#fff 0%, #fbfbfb 100%);
 
 	z-index:1;
 	/*margin: -50px;*/

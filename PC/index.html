@@ -10,7 +10,7 @@
 
 <!--<link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/cupertino/jquery-ui.min.css" />-->
 <link rel="stylesheet" href="css/bootstrap.min.css">
-<!-- <link rel="stylesheet" type="text/css" href="css/base.css" > -->
+
 <script type="text/javascript" src="js/lib/jquery-2.2.0.min.js"></script>
 <script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
 <script src="js/lib/jquery.ui.touch-punch.min.js"></script>
@@ -26,22 +26,6 @@
 </head>
 <body>
 
-
-	
-	<!-- <main> -->
-
-
-<!-- 	<p>作成　：Aキーでショートカット</p>
-	<p>クリア：Dキーでショートカット</p>
- -->
-
-
-<!-- 	<form name="form1" action="./" method="post">
-		<input type="checkbox" name="hoge" />連続入力をONにする<br />
-	</form>
- -->
-
-
 	<!-- <div id="canvas-wrap"> -->
 
 		<header>
@@ -52,11 +36,13 @@
  		</div>
 
 		<div id="btnArea">
-		<ul>
-			<li><button id="createFusen" class="btn btn-success" onclick="createFusen()">作成</button></li>
-			<li><button id="removeFusen" class="btn btn-success" onclick="allRemove()">クリア</button></li>
-			<li><button href="" id="captureBtn" class="btn btn-default">canvasを保存する</button></li>
-		</ul>
+
+			<ul>
+				<li><button id="createFusen" class="btn btn-success" onclick="createFusen()">作成</button></li>
+				<li><button id="removeFusen" class="btn btn-success" onclick="allRemove()">クリア</button></li>
+				<li><button href="" id="captureBtn" class="btn btn-default">canvasを保存する</button></li>
+			</ul>
+
 		</div>
 
 		</header>
@@ -76,8 +62,6 @@
 		 </div>
 
 
-		
-
 	<!-- </div>wrap -->
 	
 
@@ -90,9 +74,6 @@ $(function() {
 });
 
 
-
-var ttt = $('#canvas-wrap').parent();
-console.log(ttt);
 // alert(ttt);
 
 </script>

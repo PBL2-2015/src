@@ -1,10 +1,29 @@
 
 
 
+// ユーザーエージェントの設定
+// レイアウト https://blogs.adobe.com/creativestation/web-design-with-css-flexbox-menu
+
+var ua = navigator.userAgent;
+
+// if (ua.indexOf('iPhone') > 0){		
+// 	$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.2,user-scalable=yes" />\n'));		
+// }else if(ua.indexOf('Android') > 0){
+// 	$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0.2,maximum-scale=1.2,user-scalable=yes" />\n'));
+// }
+
+if (ua.indexOf('iPhone') > 0 || ua.indexOf('iPod') > 0 || (ua.indexOf('Android') > 0) && (ua.indexOf('Mobile') > 0) || ua.indexOf('Windows Phone') > 0) {
+	document.write('<link rel="stylesheet" type="text/css" href="css/mobile.css">');
+}else if(ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0){
+	document.write('<link rel="stylesheet" type="text/css" href="css/tab.css">');
+	}else{
+	document.write('<link rel="stylesheet" type="text/css" href="css/pc.css">');
+}
+
+
 // milkcocoaリファレンス
 // https://mlkcca.com/document/api-js.html
 
-// var i=1; //idインクリメント
 
 var init_pos_x = 50 + 'px';
 var init_pos_y = 100 + 'px';
@@ -235,7 +254,6 @@ $(function(){
 		$('div#'+ set.id + '_fusen').css("left", set.value.x);
 		$('div#'+ set.id + '_fusen').css("top" , set.value.y);
 		$('div#'+ set.id + '_fusen').css("background-color", "#ffdd34");
-
 		// イベントを有効な状態に戻す 
 		$('div#'+ set.id + '_fusen').css("pointer-events", "auto");
 		$('#backImage').remove();
@@ -325,8 +343,6 @@ function getTime(){
 	return date;
 }
 
-
-
 $(window).load(function(){
   container = $('#canvas-wrap');
   canvas = $('canvas');
@@ -334,8 +350,6 @@ $(window).load(function(){
   test = window.innerWidth;
 
   console.log(test);
-
-
 
   function resizeCanvas(e){
   	
@@ -349,26 +363,6 @@ $(window).load(function(){
   $(window).on('resize', resizeCanvas());
 
 });
-
-
-// ユーザーエージェントの設定
-// レイアウト https://blogs.adobe.com/creativestation/web-design-with-css-flexbox-menu
-
-var ua = navigator.userAgent;
-
-// if (ua.indexOf('iPhone') > 0){		
-// 	$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.2,user-scalable=yes" />\n'));		
-// }else if(ua.indexOf('Android') > 0){
-// 	$("head").append($('<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0.2,maximum-scale=1.2,user-scalable=yes" />\n'));
-// }
-
-if (ua.indexOf('iPhone') > 0 || ua.indexOf('iPod') > 0 || (ua.indexOf('Android') > 0) && (ua.indexOf('Mobile') > 0) || ua.indexOf('Windows Phone') > 0) {
-	document.write('<link rel="stylesheet" type="text/css" href="css/mobile.css">');
-}else if(ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0){
-	document.write('<link rel="stylesheet" type="text/css" href="css/tab.css">');
-	}else{
-	document.write('<link rel="stylesheet" type="text/css" href="css/pc.css">');
-}
 
 	
 
