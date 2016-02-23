@@ -1,77 +1,72 @@
 
-/*
-#################################
-タブレット用CSS(未開発)
-- 
-#################################
-*/
 html{
-	height: 100%;
+    -webkit-text-size-adjust:100%;
+    -ms-text-size-adjust:100%
 }
 
 body{
-	/*height: 100%;*/
 	margin: 0;
 	padding: 0;
-	position: relative;
-	/*position: relative;*/
 	-webkit-text-size-adjust: 100%;
-	background: #f4cc70;
-	/*background: wheat;*/
+	/*position: relative;*/
+	/*background: #f4cc70;*/
+	background-image: url("../image/backPic.png");
+    background-size: 64px 64px;
 
 }
 
 header{
-	z-index:100;
-	display: inline;
+	position: relative;
+	z-index:5;
+	padding-left: 10px;
 	display:flex;
 	display:webkit-flex;
-	justify-content:space-around;
-	-webkit-justify-content:space-around;
+	justify-content:flex-start;
+	-webkit-justify-content:flex-start;
+	height: 80px;
 }
 
+
+#demoCaption{
+	height: 30px;
+	margin: 10px;
+}
+
+#demoCaption ul{
+	list-style-type: none;
+}
 h1{
-    font-size: 30pt;
+    font-size: 28pt;
     font-weight: bold;
-    color: orange;
-    /*font-family: 'Helvetica, Meiryo';*/
+    color: black;
+    font-family: 'Helvetica, Meiryo';
     font-family: 'allura';
     letter-spacing: 0.3em;
-}
-
-
-#btnArea{
-	/*height:200px;*/
-	/*background: red;*/
-	margin-bottom: 10px;
+    display: block;
 }
 
 #checkArea{
-	font-weight: bold;
-	margin: 2px 0;
+	display: block;
+	font-weight: bold;	
+	padding-top: 30px;
+	white-space: nowrap;
 }
-
-button#createFusen,#removeFusen,#captureBtn{
-    font-size: 16pt;
-    display: inline;
-    margin-right: 5px;
-    padding: 10px 20px;
-}
-
 
 #canvas-wrap{
-	height: 100%;
-	width: 100%;
-	position: fixed;
+	/*height: 100%;*/
+	width:  980px;
+	position: relative;
+	top:0;
+	left:0;
+	/*position: fixed;*/
 }
 
 canvas{
+	position:relative;
+	top: 0px;
+	left: 0px;
+	z-index:1;
 	border: 1px solid gray;
-/*	position: absolute;
-	top: 0;
-	left: 0;
-*/	background: #ffffff; /* white */
-	/*z-index: -1;*/
 }
 
 .fusen{
@@ -83,9 +78,9 @@ canvas{
 	font-family: メイリオ, sans-serif;
 	background: #ffdd34;
 	padding: 22px 5px 3px;
-	z-index: 400;
-	width: 100px;
-	height: 60px;
+	z-index: 5;
+	width: 150px;
+	height: 100px;
 	border: 1px solid #f4cc70;
 }
 
@@ -107,7 +102,6 @@ canvas{
 
 }
 
-
 #backImage{
 	position: absolute;
 	top:0px;
@@ -116,101 +110,29 @@ canvas{
 	height: 100px;
 }
 
-
-
-#btnAreaForSp{
-  background-color: red;
-  position: absolute;
-  bottom: 0px;
-  z-index: 500;
-  display: none;
+#btnArea{
+	display: none;
 }
 
-ul {
-  font-size: 0;
-  list-style-type: none;
-  margin: 0;
-  padding-left: 0;
-  z-index: 500;
-  display: inline;
+#btnAreaSp{
   display:flex;
   display:webkit-flex;
-/*  justify-content:space-around;
-  -webkit-justify-content:space-around;
-*/}
+  position: relative;
+  top: 50px;
+}
 
-li{
-  text-align: center;
-  display: block;
-  z-index: 500;
 
- }  
-
-#createFusenSp,#removeFusenSp,#captureBtnSp{
+#btnAreaSp button{
 	display: block;
-	font-size: 20px;
+	font-size: 38px;
+	-webkit-flex: 1 1 0;
+	flex: 1 1 0;
+	padding: 50px 0;
+	border-right: 1px solid gray;
+	text-align: center;
 }
 
 @font-face {
    font-family: allura;
    src: url('../font/Allura-Regular.otf') format("opentype");
 }
-
-/*@media only screen and (max-device-width : 480px) {*/
-/* スマートフォンだけ以下を適用 */
-  /*	
-	#page{
-		width:95%;
-		margin: 0 10px;
-	}
-
-	#canvas-wrap{
-	width: 100%;
-    height: 500px;
-	position: relative;
-	top:0;
-	left:0;
-	}
-
-	canvas{
-		border: 1px solid gray;
-		position: relative;
-		top: 0;
-		left: 0;
-		background: #ffffff; 
-		height: 100%;
-		width: 100%;
-	}
-
-	.fusen{
-		position: absolute;
-		text-align: center; 
-		color: black;
-		font-size: 12px;
-		font-weight: bold;
-		font-family: メイリオ, sans-serif;
-		background: #ffdd34;
-		padding: 22px 5px 3px;
-		z-index: 100;
-		width: 120px;
-		height: 80px;
-		border: 1px solid #f4cc70;
-	}
-
-	.cross{
-		position: absolute;
-		text-align: center; 
-		color: black;
-		font-size: 8px;
-		font-family: メイリオ, sans-serif;
-		background: #ffdd34;
-		padding: 0.5px;
-		z-index: 200;
-		width: 20px;
-		height: 20px;
-		cursor: pointer;
-		background: transparent;
-		top:4px;
-		left: 100px;
-	}
-}*/

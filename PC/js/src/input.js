@@ -20,13 +20,47 @@ if (ua.indexOf('iPhone') > 0 || ua.indexOf('iPod') > 0 || (ua.indexOf('Android')
 	document.write('<link rel="stylesheet" type="text/css" href="css/pc.css">');
 }
 
-
 // milkcocoaリファレンス
 // https://mlkcca.com/document/api-js.html
 
+// 乱数生成
+// https://syncer.jp/javascript-reverse-reference/create-random-number
 
-var init_pos_x = 50 + 'px';
-var init_pos_y = 100 + 'px';
+// 1から4の乱数を生成
+var rand = Math.floor( Math.random() * 4) + 1;
+// 0から490の乱数を作成
+var rand2 = Math.floor(Math.random() * 400);
+// 491から700の乱数を作成
+var rand3 = Math.floor(Math.random() * 210) + 500;
+
+
+switch(rand){
+	case 1:
+		console.log("エリア1");
+		init_pos_x = rand2 + 'px';
+		init_pos_y = rand2 + 'px';
+		break;
+	case 2:
+		console.log("エリア2");
+		init_pos_x = rand2 + "px";
+		init_pos_y = rand3 + "px";
+		break;
+	case 3:
+		console.log("エリア3");
+		init_pos_x = rand3 + "px";
+		init_pos_y = rand2 + "px";
+		break;
+	case 4:
+		console.log("エリア4");
+		init_pos_x = rand3 + "px";
+		init_pos_y = rand3 + "px";
+		break;
+}
+
+
+// var init_pos_x = 20 + 'px';
+// var init_pos_y = 20 + 'px';
+
 var pos_x = init_pos_x;
 var pos_y = init_pos_y;
 
@@ -91,12 +125,12 @@ function createFusen(){
             'y' : pos_y
     });
 
-	pos_x = parseInt(pos_x) + 200 + 'px';
+	pos_x = parseInt(pos_x) + 80 + 'px';
 
 	// 次の列へ移動する
 	if(parseInt(pos_x) >= 800){
 		pos_x = init_pos_x;
-		pos_y = parseInt(pos_y) + 150 + 'px';
+		pos_y = parseInt(pos_y) + 20 + 'px';
 	}
 
 	// 連続入力がONの時に入力を繰り返す
@@ -158,6 +192,7 @@ function redrawFusen(id,input,pos_x,pos_y){
 	}
 	
 	// canvas-wrapの子要素（canvasの下の位置）にdivを挿入する
+
 	$('#canvas-wrap').append($(element).append(cross_element));
 
 	// 付箋をドラッグ可能にする
@@ -172,14 +207,12 @@ function redrawFusen(id,input,pos_x,pos_y){
 			_id = idName.substring(0, idName.indexOf("_") ); //_fusenを取り除いた文字列
             innerText = ui.helper[0].firstChild.data;
 
-
            	ds.send({
            		'content': innerText,
         		'idName': idName,
         		message:'moving'
         	});
         },
-
 
         stop: function(event, ui) {
             console.log("Dropped!!");
@@ -236,6 +269,10 @@ function canvasTap(e){
 };
 
 $(function(){
+
+
+
+
 
 	// 読み込み時にデータストアに格納されているデータを描画する
 	ds.stream().size(20).sort('desc').next(function(err,datas){
@@ -346,8 +383,6 @@ $(document).on('click','#captureBtn, #captureBtnSp', function(){
 
 });
 
-
-
 // 日付の取得
 function getTime(){
   
@@ -370,8 +405,6 @@ function getTime(){
 
 // PBL2ではリサイズは対象外
 
-
-
 // $(window).load(function(){
 //   container = $('#canvas-wrap');
 //   canvas = $('canvas');
@@ -393,26 +426,26 @@ function getTime(){
 
 // });
 
-$(window).load(function(){
-  container = $('#canvas-wrap');
-  canvas = $('canvas');
+// $(window).load(function(){
+//   container = $('#canvas-wrap');
+//   canvas = $('canvas');
 
-  test = window.innerWidth;
+//   test = window.innerWidth;
 
-  console.log(test);
+//   console.log(test);
 
-//   function resizeCanvas(e){
+// //   function resizeCanvas(e){
   	
-//     canvas.outerWidth(container.width());
-//     canvas.outerHeight(container.width() * 1.2);  //1.0は適宜変更
+// //     canvas.outerWidth(container.width());
+// //     canvas.outerHeight(container.width() * 1.2);  //1.0は適宜変更
   
-  // }
+//   // }
 
-//   resizeCanvas();
+// //   resizeCanvas();
 
-//   $(window).on('resize', resizeCanvas());
+// //   $(window).on('resize', resizeCanvas());
 
-});
+// });
 
 	
 

@@ -26,6 +26,16 @@ header{
 	height: 80px;
 }
 
+
+#demoCaption{
+	height: 50px;
+	margin: 80px 20px 20px;
+	white-space: nowrap;
+}
+
+#demoCaption ul{
+	list-style-type: none;
+}
 h1{
     font-size: 28pt;
     font-weight: bold;
@@ -71,7 +81,7 @@ canvas{
 	padding: 22px 5px 3px;
 	z-index: 5;
 	width: 150px;
-	height: 100px;
+	height: 90px;
 	border: 1px solid #f4cc70;
 }
 
@@ -109,7 +119,7 @@ canvas{
   display:flex;
   display:webkit-flex;
   position: relative;
-  top: 50px;
+  top: 30px;
 }
 
 

@@ -1,11 +1,10 @@
-/*
-#################################
-PC用CSS
-- 
-- 
-- 
-#################################
-*/
+figcaption{
+	width:180px;
+	text-align: center;
+	font-weight: bold;
+}
+
+
 html{
     -webkit-text-size-adjust:100%;
     -ms-text-size-adjust:100%
@@ -30,9 +29,22 @@ header{
 	display:webkit-flex;
 	justify-content:flex-start;
 	-webkit-justify-content:flex-start;
-	height: 80px;
+	height: 100px;
 }
 
+#demoCaption{
+	height: 50px;
+	margin: 10px;
+	white-space: nowrap;
+}
+
+#demoCaption ul{
+	list-style-type: none;
+}
+
+#createArea{
+	white-space: nowrap;
+}
 h1{
     font-size: 28pt;
     font-weight: bold;
@@ -52,8 +64,8 @@ h1{
 
 
 #canvas-wrap{
-	width:  960px;
-	height: 960px;
+	width:  980px;
+	height: 980px;
 	position: relative;
 	top:0;
 	left:0;
@@ -68,10 +80,6 @@ canvas{
 }
 
 .fusen{
-
-	
-
-
 	position: absolute;
 	text-align: center; 
 	color: black;
@@ -82,7 +90,7 @@ canvas{
 	padding: 22px 5px 3px;
 	z-index: 5;
 	width: 150px;
-	height: 100px;
+	height: 90px;
 	border: 1px solid #f4cc70;
 }
 
