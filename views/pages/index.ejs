@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bresticky Top</title>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="../../public/css/pure/pure-min.css">
+</head>
+
+
+<body>
+
+<h1>Bresticky</h1>
+
+
+  <form name="agendaForm">
+    <input name="agenda" id="id_agenda" type="text" placeholder="議題を入力" onfocus="this.placeholder=''" onblur="this.placeholder='議題を入力'">
+  </form>
+
+
+
+  <button id="id_enter_button" onclick="enterRoom()"/>Start Brainstorming</button>
+
+
+<script>
+
+
+function enterRoom() {
+
+  var url = 'agenda';
+  var agenda  = document.forms.agendaForm.agenda.value;
+  var roomID;
+  var JSONdata = {Agenda:agenda};
+
+  $.ajax({
+    type: 'post',
+    url: url,
+    data: JSON.stringify(JSONdata),
+    contentType: 'application/JSON',
+    dataType: 'JSON',
+    scriptCharset: 'utf-8',
+    success: function(data) {
+      console.log(data.roomID);
+      location.href = data.roomID; 
+      $.ajax({
+        url: data.roomID
+      });
+
+    }, 
+    error: function(data) {
+      console.log('error...');      /* Act on the event */
+    }
+  });
+
+
+}
+
+// フォームでEnterキーを押して送信されるのを防ぐ
+$(function(){
+        $("input").on("keydown", function(e) {
+            if ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) {
+                return false;
+            } else {
+                return true;
+            }
+        });
+});
+
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,139 @@
+﻿
+html{
+    -webkit-text-size-adjust:100%;
+    -ms-text-size-adjust:100%
+}
+
+body{
+	margin: 0;
+	padding: 0;
+	-webkit-text-size-adjust: 100%;
+	/*position: relative;*/
+	/*background: #f4cc70;*/
+	background-image: url("../image/backPic.png");
+    background-size: 64px 64px;
+
+}
+
+header{
+	position: relative;
+	z-index:5;
+	padding-left: 10px;
+	display:flex;
+	display:webkit-flex;
+	justify-content:flex-start;
+	-webkit-justify-content:flex-start;
+	height: 80px;
+}
+
+
+#demoCaption{
+	height: 50px;
+	margin: 80px 20px 20px;
+	white-space: nowrap;
+}
+
+#demoCaption ul{
+	list-style-type: none;
+}
+h1{
+    font-size: 28pt;
+    font-weight: bold;
+    color: black;
+    font-family: 'Helvetica, Meiryo';
+    font-family: 'allura';
+    letter-spacing: 0.3em;
+    display: block;
+}
+
+#checkArea{
+	display: block;
+	font-weight: bold;	
+	padding-top: 30px;
+	white-space: nowrap;
+}
+
+#canvas-wrap{
+	/*height: 100%;*/
+	width:  980px;
+	position: relative;
+	top:0;
+	left:0;
+	/*position: fixed;*/
+}
+
+canvas{
+	position:relative;
+	top: 0px;
+	left: 0px;
+	z-index:1;
+	border: 1px solid gray;
+}
+
+.fusen{
+	position: absolute;
+	text-align: center; 
+	color: black;
+	font-size: 13px;
+	font-weight: bold;
+	font-family: メイリオ, sans-serif;
+	background: #ffdd34;
+	padding: 22px 5px 3px;
+	z-index: 5;
+	width: 150px;
+	height: 90px;
+	border: 1px solid #f4cc70;
+}
+
+.cross{
+	position: absolute;
+	text-align: center; 
+	color: black;
+	font-size: 8px;
+	font-family: メイリオ, sans-serif;
+	background: #ffdd34;
+	padding: 0.5px;
+	z-index: 500;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	background: transparent;
+	top:4px;
+	left: 125px;
+
+}
+
+#backImage{
+	position: absolute;
+	top:0px;
+	left: 0px;
+	width: 150px;
+	height: 100px;
+}
+
+#btnArea{
+	display: none;
+}
+
+#btnAreaSp{
+  display:flex;
+  display:webkit-flex;
+  position: relative;
+  top: 30px;
+}
+
+
+#btnAreaSp button{
+	display: block;
+	font-size: 38px;
+	-webkit-flex: 1 1 0;
+	flex: 1 1 0;
+	padding: 50px 0;
+	border-right: 1px solid gray;
+	text-align: center;
+}
+
+@font-face {
+   font-family: allura;
+   src: url('../font/Allura-Regular.otf') format("opentype");
+}

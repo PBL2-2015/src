@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<!-- <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=2.0,user-scalable=yes" /> -->
+
+<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+ -->
+
+<!--<link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/cupertino/jquery-ui.min.css" />-->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+
+
+<script type="text/javascript" src="/js/lib/jquery-2.2.0.min.js"></script>
+<script type="text/javascript" src="/js/lib/jquery-ui.min.js"></script>
+<script src="/js/lib/jquery.ui.touch-punch.min.js"></script>
+<script src="https://cdn.mlkcca.com/v2.0.0/milkcocoa.js"></script>
+<script type="text/javascript" src="/js/src/input.js"></script>
+<script type="text/javascript" src="/js/src/ua.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+
+
+<title>Bresticky</title>
+
+
+</head>
+
+<body>
+
+    <header>
+
+    <h1>Bresticky</h1>
+
+
+
+    <div id="checkArea">
+      <input type="checkbox" name ="conInput" value="on">連続入力をONにする
+    </div>
+
+    <div id="btnArea">
+      <button id="createFusen" class="btn btn-success" onclick="createFusen(roomID)">作成</button>
+      <button id="removeFusen" class="btn btn-success" onclick="allRemove()">クリア</button>
+      <button href="" id="captureBtn" class="btn btn-default">canvasを保存する</button>
+    </div>
+
+
+    <figure id="createArea">
+
+    </figure>
+    </header>
+
+    <div id='demoCaption'>
+    <h2>Room ID:327 議題:てすと</h2>
+
+    <p id='touchData'></p>
+    <p id="touchState"></p>
+<!-- 
+      <ul>
+      <li>推奨ブラウザ：GoogleChrome</li>
+      <li><b>このページでこれ以上ダイアログボックスを生成しない</b> をクリックした場合、正常にアプリが動作しません。ご注意下さい。</li>
+      <li>将来的にはクリックorタップ位置に付箋を作成する予定です。現在は他ユーザーと被らないようにランダム位置に作成するようにしています。</li>
+      </ul>
+       -->
+    </div>
+
+     <!-- <canvas id="canvas" width="1000px;" height="1000px;"></canvas> -->
+     <div id="canvas-wrap">
+     <canvas id="canvas" width="980px;" height="980px;"></canvas>
+
+     </div>
+
+
+    <div id="btnAreaSp">
+      <button id="createFusen" class="btn btn-success btn" onclick="createFusen(roomID)">作成</button>
+      <button id="removeFusen" class="btn btn-success btn" onclick="allRemove()">クリア</button>
+      <button href="" id="captureBtn" class="btn btn-default btn">canvasを保存する</button>
+     </div>
+
+
+
+<script>
+
+var roomID = 327;
+
+$(function() {
+  $('#canvas').droppable();
+});
+
+// ttt = canvas.height;
+// alert(ttt);
+</script>
+
+
+</body>
+</html>
