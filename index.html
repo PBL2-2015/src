@@ -19,6 +19,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/p5.min.js"></script>
+
 
 <title>Bresticky</title>
 
@@ -34,6 +36,7 @@
  		</div>
 
 		<div id="btnArea">
+			<button id="createfigure" class="btn btn-success" onclick="createfigure()">図形作成</button>
 			<button id="createFusen" class="btn btn-success" onclick="createFusen()">作成</button>
 			<button id="removeFusen" class="btn btn-success" onclick="allRemove()">クリア</button>
 			<button href="" id="captureBtn" class="btn btn-default">canvasを保存する</button>
@@ -57,11 +60,12 @@
 		 <!-- <canvas id="canvas" width="1000px;" height="1000px;"></canvas> -->
 		 <div id="canvas-wrap">
 		 <canvas id="canvas" width="980px;" height="980px;"></canvas>
-
 		 </div>
 
 
 		<div id="btnAreaSp">
+			<button id="createfigure" class="btn btn-success btn"
+			onclick="createfigure()">図形作成</button>
 			<button id="createFusen" class="btn btn-success btn" onclick="createFusen()">作成</button>
 			<button id="removeFusen" class="btn btn-success btn" onclick="allRemove()">クリア</button>
 			<button href="" id="captureBtn" class="btn btn-default btn">canvasを保存する</button>

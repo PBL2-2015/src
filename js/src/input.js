@@ -1,12 +1,6 @@
-
-
-
-// ユーザーエージェントの設定
-// レイアウト https://blogs.adobe.com/creativestation/web-design-with-css-flexbox-menu
-
 var ua = navigator.userAgent;
 
-if (ua.indexOf('iPhone') > 0){		
+if (ua.indexOf('iPhone') > 0){
 	$("head").append($('<meta name="viewport" content="width=980px,initial-scale=1.0,minimum-scale=0.2,maximum-scale=1.2,user-scalable=yes" />\n'));		
 }else if(ua.indexOf('Android') > 0){
 	$("head").append($('<meta name="viewport" content="width=980px,initial-scale=1.0,minimum-scale=0.2,maximum-scale=1.2,user-scalable=yes" />\n'));
@@ -57,7 +51,6 @@ switch(rand){
 		break;
 }
 
-
 // var init_pos_x = 20 + 'px';
 // var init_pos_y = 20 + 'px';
 
@@ -70,7 +63,7 @@ var flag = 1;	//スクロールのためのフラグ
 var intervalID;	//同上
 
 // MilkCocoaオブジェクトのインスタンスを取得
-var milkcocoa = new MilkCocoa('yieldijtvk6yv.mlkcca.com');
+var milkcocoa = new MilkCocoa('vueik3ipe4m.mlkcca.com');
 
 // データストアの作成
 var ds = milkcocoa.dataStore('fusen/message');
@@ -125,7 +118,9 @@ function createFusen(){
             'content' : input,
             'visibility' : 1,
             'x' : pos_x,
-            'y' : pos_y
+            'y' : pos_y,
+            'width': 150,
+            'height':150
     });
 
 	pos_x = parseInt(pos_x) + 80 + 'px';
@@ -143,7 +138,7 @@ function createFusen(){
 
 }
 
-function redrawFusen(id,input,pos_x,pos_y){
+function redrawFusen(id,input,pos_x,pos_y,f_width,f_height){
 
 	// 連続入力がONのとき１，OFFのとき0を返す
 	var checkCount = $(':radio[name="conInput"]:checked').length;
@@ -151,20 +146,38 @@ function redrawFusen(id,input,pos_x,pos_y){
 	// canvasの設定
 	var canvas = document.getElementById("canvas");
 	var ctx = canvas.getContext("2d");
+	console.log(f_width);
+	console.log(f_height);
 
-	// 付箋のdiv要素の作成 
+	// 付箋のdiv要素の作成
 	var element = document.createElement('div');
 	element.id = id +"_fusen";
 	element.className = "fusen";
-	element.innerHTML = input;
+
+	var temp = document.createElement('img');
+	temp.setAttribute("src", "jiku.png");
+	temp.setAttribute("width", f_width);
+	temp.setAttribute("height", f_height);
+	temp.setAttribute("id", id+"_image");
+	element.appendChild(temp);
+	console.log(temp);
+	element.innerHTML += temp.innerHTML;
 	element.style.top = pos_y ;
 	element.style.left = pos_x ;
+
+	element.style.width = f_width;
+	element.style.height = f_height;
+
+
 
 	// 削除ボタン(☓ボタン)のdiv要素の作成
 	var cross_element = document.createElement('div');
 	cross_element.id = id +"_cross";
 	cross_element.className = 'cross';
 	cross_element.innerHTML = '☓';
+	var cross_left = f_width - 25;
+	console.log(cross_left);
+	cross_element.style.left = cross_left;
 
 	// ☓ボタンをクリックした場合の操作
 	cross_element.onclick = function(){
@@ -174,29 +187,112 @@ function redrawFusen(id,input,pos_x,pos_y){
 			return false;
 		}else{
 			// OK時
-		
+
 			// var num = this.id.match(/\d/g).join("");
 			// document.getElementById(num+"_fusen").style.visibility="hidden"; //visibilityを使う方法
 			//document.getElementById(num+"_fusen").style.display="none"; //displayを使う方法			
 			//$(this).parent().remove(); //remove使う方法
 
 			// pushされたときに付加されたid（_crossより前の文字列）を切り取る
-			
+
 			a = this.parentNode.style.left; // 付箋のx座標
 			b = this.parentNode.style.top; // 付箋のy座標
 
 			idName = this.id; // ◯◯ + _fusen の文字列
+			console.log(idName);
 			_id = idName.substring(0, idName.indexOf("_") ); //_fusenを取り除いた文字列
-
+			console.log(_id);
 			// var text = $(_id + '_fusen').html();
 			// データストアから削除する
 			ds.remove(_id);
 		}
 	}
-	
+
+	var plus_element = document.createElement('div');
+	plus_element.id = id +"_plus";
+	plus_element.className = 'plus';
+	plus_element.innerHTML = '+';
+
+	// ☓ボタンをクリックした場合の操作
+	plus_element.onclick = function(){
+
+		console.log(this.id);
+		idName = this.id;
+		_id = idName.substring(0, idName.indexOf("_") );
+
+		console.log(_id);
+		var box = document.getElementById(_id + "_fusen");
+		var box_1 = document.defaultView.getComputedStyle(box, null);
+		var w = parseInt(box_1.getPropertyValue("width"));
+		var h = parseInt(box_1.getPropertyValue("height"));
+		w = w + 10;
+		h = h + 10;
+		box.style.width = w+"px";
+		box.style.height = h+"px";
+
+		var box2 = document.getElementById(_id+"_image");
+		console.log(box2);
+		box2.width = box2.width + 10;
+		box2.height = box2.height + 10;
+
+		var box3 = document.getElementById(_id+"_cross");
+		var box3_1 = document.defaultView.getComputedStyle(box3, null);
+		var l = parseInt(box3_1.getPropertyValue("left"));
+		l = l + 10;
+		box3.style.left = l +"px";
+
+		console.log(w);
+		console.log(h);
+		ds.set(_id,{
+            'width' : w,
+            'height': h
+    	});
+
+	}
+
+	var minus_element = document.createElement('div');
+	minus_element.id = id +"_minus";
+	minus_element.className = 'minus';
+	minus_element.innerHTML = '-';
+
+	// ☓ボタンをクリックした場合の操作
+	minus_element.onclick = function(){
+		console.log(this.id);
+		idName = this.id;
+		_id = idName.substring(0, idName.indexOf("_") );
+
+		console.log(_id);
+		var box = document.getElementById(_id + "_fusen");
+		var box_1 = document.defaultView.getComputedStyle(box, null);
+		var w = parseInt(box_1.getPropertyValue("width"));
+		var h = parseInt(box_1.getPropertyValue("height"));
+
+		if(w>=150){
+			w = w - 10;
+			h = h - 10;
+			box.style.width = w+"px";
+			box.style.height = h+"px";
+		}
+
+		var box2 = document.getElementById(_id+"_image");
+		console.log(box2);
+		if(box2.width>=150){
+			box2.width = box2.width - 10;
+			box2.height = box2.height - 10;
+		}
+
+		var box3 = document.getElementById(_id+"_cross");
+		var box3_1 = document.defaultView.getComputedStyle(box3, null);
+		var l = parseInt(box3_1.getPropertyValue("left"));
+		if(l>=125){
+			l = l - 10;
+			box3.style.left = l +"px";
+		}
+
+	}
 	// canvas-wrapの子要素（canvasの下の位置）にdivを挿入する
 
-	$('#canvas-wrap').append($(element).append(cross_element));
+	$('#canvas-wrap').append($(element).append(cross_element).append(plus_element).append(minus_element));
 
 	// 付箋をドラッグ可能にする
 	// http://stacktrace.jp/jquery/ui/interaction/draggable.html
@@ -204,7 +300,7 @@ function redrawFusen(id,input,pos_x,pos_y){
         containment: "#canvas",
         // opacity: 0.3,
         revert: false,
-        
+
         start: function(event, ui){
         	idName = ui.helper[0].id; // ◯◯ + _fusen の文字列
 			_id = idName.substring(0, idName.indexOf("_") ); //_fusenを取り除いた文字列
@@ -230,6 +326,7 @@ function redrawFusen(id,input,pos_x,pos_y){
 			_id = idName.substring(0, idName.indexOf("_") ); //_fusenを取り除いた文字列
             zahyo = $(this).position();
             innerText = ui.helper[0].firstChild.data;
+            console.log(_id);
             moveFusen(_id, innerText, zahyo)
         }
     	
@@ -244,13 +341,12 @@ function scroll_sc(event){
 		var touch = touches[0];
 		c_zahyoX=touch.clientX;
 		c_zahyoY=touch.clientY;
-		
-		
+
+
 		var dBody = document.body ;
 		var nX = dBody.scrollLeft ;	// 現在位置のX座標
 		var nY = dBody.scrollTop ;		// 現在位置のY座標
 
-		
 		if(c_zahyoX>window.innerWidth*0.9){
 		window.scrollTo(nX+window.innerWidth*0.03,nY);
 		}
@@ -316,19 +412,17 @@ $(function(){
 	// 読み込み時にデータストアに格納されているデータを描画する
 	ds.stream().size(20).sort('desc').next(function(err,datas){
 		 for(var i=0;i < datas.length;i++){
-		redrawFusen(datas[i].id, datas[i].value.content,datas[i].value.x, datas[i].value.y);
+		redrawFusen(datas[i].id, datas[i].value.content,datas[i].value.x, datas[i].value.y,datas[i].value.width,datas[i].value.height);
 		}
 	});
 
 	// データストアでpushイベントを検知したとき
 	ds.on('push',function(pushed){
-		redrawFusen(pushed.id, pushed.value.content, pushed.value.x,pushed.value.y)
+		redrawFusen(pushed.id, pushed.value.content, pushed.value.x,pushed.value.y,pushed.value.width,pushed.value.height)
 	});
 
 	// データストアでsetイベントを検知したとき
 	ds.on('set', function(set){
-
-
 
 		$('div#'+ set.id + '_fusen').css("left", set.value.x);
 		$('div#'+ set.id + '_fusen').css("top" , set.value.y);
@@ -485,5 +579,3 @@ function getTime(){
 // //   $(window).on('resize', resizeCanvas());
 
 // });
-
-	
