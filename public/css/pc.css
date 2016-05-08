@@ -101,6 +101,24 @@ canvas{
 	border: 1px solid #f4cc70;
 }
 
+.axis{
+	position: absolute;
+	text-align: center; 
+	color: black;
+	font-size: 13px;
+	font-weight: bold;
+	font-family: メイリオ, sans-serif;
+	top:100px;
+	left:100px;
+	/*background: #ffdd34;*/
+	/*padding: 22px 5px 3px;*/
+	z-index: 5;
+/*	width: 150px;
+	height: 90px;
+*/	border: 1px solid #f4cc70;
+
+}
+
 .fusen-selected{
 	position: absolute;
 	text-align: center; 
@@ -129,11 +147,48 @@ canvas{
 	height: 20px;
 	cursor: pointer;
 	background: transparent;
-	top:4px;
+/*	top:4px;
 	left: 125px;
+*/
+}
+
+
+
+.plus{
+	position: absolute;
+	text-align: center; 
+	color: black;
+	font-size: 10px;
+	font-family: メイリオ, sans-serif;
+	background: #ffdd34;
+	padding: 0.5px;
+	z-index: 500;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	background: transparent;
+	top:4px;
+	left: 4px;
 
 }
 
+.minus{
+	position: absolute;
+	text-align: center; 
+	color: black;
+	font-size: 10px;
+	font-family: メイリオ, sans-serif;
+	background: #ffdd34;
+	padding: 0.5px;
+	z-index: 500;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	background: transparent;
+	top:4px;
+	left: 20px;
+
+}
 
 #backImage{
 	position: absolute;

@@ -7,10 +7,11 @@ var dd = new Date();
 var flag = 1;	//スクロールのためのフラグ
 var intervalID;	//同上
 
-
 var milkcocoa = new MilkCocoa('yieldijtvk6yv.mlkcca.com');	// MilkCocoaオブジェクトのインスタンスを取得
 var ds = milkcocoa.dataStore('fusen/message');	// データストアの作成
+var ds_image = milkcocoa.dataStore('img');
 var ds_canvas = milkcocoa.dataStore('canvas');
+
 // ページ描画時に実行
 
 $(function(){
@@ -24,24 +25,33 @@ $(function(){
 	pos_x = init_pos_x;
 	pos_y = init_pos_y;
 
-	// 読み込み時にデータストアに格納されているデータを描画する
+	// 付箋の読み込み
 	ds.stream().size(999).sort('desc').next(function(err,datas){
 		for(var i=0;i < datas.length;i++){
-
 			if(datas[i].value.roomID === roomID){
-				redrawFusen(datas[i].id, datas[i].value.content,datas[i].value.x, datas[i].value.y); 
+				drawFusen(datas[i].id, datas[i].value.content,datas[i].value.x, datas[i].value.y); 
 			}
 		}
 	});
 
-	// データストアでpushイベント(データの新規作成)を検知したとき
-	ds.on('push',function(pushed){
-		
-		if(pushed.value.roomID === roomID){
-			redrawFusen(pushed.id, pushed.value.content, pushed.value.x,pushed.value.y)
+	// 画像の読み込み
+	ds_image.stream().size(999).sort('desc').next(function(err,datas){
+		for(var i=0;i < datas.length;i++){
+			if(datas[i].value.roomID === roomID){
+				drawImg(datas[i].id,datas[i].value.x, datas[i].value.y,datas[i].value.width, datas[i].value.height); 
+			}
 		}
-
 	});
+
+// データストアでpushイベント(データの新規作成)を検知したとき
+	ds.on('push',function(pushed){		
+			drawFusen(pushed.id, pushed.value.content, pushed.value.x,pushed.value.y);
+	});
+
+	ds_image.on('push',function(pushed){		
+			drawImg(pushed.id, pushed.value.x,pushed.value.y, pushed.value.width, pushed.value.height);
+	});
+
 
 	// データストアでsetイベント(データの書き換え)を検知したとき
 	ds.on('set', function(set){
@@ -58,6 +68,7 @@ $(function(){
 		});
 		// $('#backImage').remove();	
 	});
+
 
 	ds.on('send', function(sent){
 	
@@ -82,7 +93,10 @@ $(function(){
 	// 削除時に非表示にさせる
 	ds.on('remove',function(removed){
 		$('div#'+ removed.id + '_fusen').css("display","none");
-		console.log('非表示にしたよ!');
+	});
+
+	ds_image.on('remove',function(removed){
+		$('div#'+ removed.id + '_imagewrap').css("display","none");
 	});
 
 
@@ -147,10 +161,6 @@ selecting();
 	}
 
 	
-
-
-
-
 	function lockScreen(id) {
  
         // 現在画面を覆い隠すためのDIVタグを作成する
@@ -203,11 +213,15 @@ function allRemove(){
 		pos_y = init_pos_y;
 
 		ds.stream().size(999).sort('desc').next(function(err,datas){
+			for(var i=0;i < datas.length;i++){
+				ds.remove(datas[i].id);
+			}
+		});
 
-		for(var i=0;i < datas.length;i++){
-			ds.remove(datas[i].id);
-		}
-
+		ds_image.stream().size(999).sort('desc').next(function(err,datas){
+			for(var i=0;i < datas.length;i++){
+				ds_image.remove(datas[i].id);
+			}
 		});
 
 	}
@@ -241,7 +255,6 @@ function createFusen(roomID,pos_x,pos_y){
 
 	// 入力した内容をデータストアに新しく追加
 	// このときにidが自動で生成される（on()メソッド中でpushed.idとして取得可能）
-
 	ds.push({
             'content' : input,
             'visibility' : 1,
@@ -250,49 +263,47 @@ function createFusen(roomID,pos_x,pos_y){
             'roomID' : roomID
   });
 
-//	pos_x = parseInt(pos_x) + 80 + 'px';
-
-		console.log('pos_x = ' + pos_x);
-		console.log('pos_y = ' + pos_y);
-
-		// canvasサイズを超える位置に付箋を置いた場合にcanvasを拡張する
-		if(pos_x >= canvasWidth * 0.85) { //現状の付箋幅がcanvas幅の約13%
-			console.log('over!!');
-			$('#canvas-wrap').width(canvasWidth*1.1);
-			$('#canvas').width(canvasWidth*1.1);
-		}
-
-		if(pos_y >= canvasHeight * 0.87) { //現状の付箋幅がcanvas幅の約13%
-			console.log('over!!');
-			$('#canvas-wrap').width(canvasHeight*1.1);
-			$('#canvas').width(canvasHeight*1.1);
-		}
-
-		ds_canvas.push({
-			canvasWidth: canvasWidth,  	
-			canvasHeight: canvasHeight
-  	});
-
-
-
-
-	// 次の列へ移動する
-	if(parseInt(pos_x) >= 800){
-		pos_x = init_pos_x;
-		pos_y = parseInt(pos_y) + 20 + 'px';
+	// canvasサイズを超える位置に付箋を置いた場合にcanvasを拡張する
+	if(pos_x >= canvasWidth * 0.85) { //現状の付箋幅がcanvas幅の約13%
+		console.log('over!!');
+		$('#canvas-wrap').width(canvasWidth*1.1);
+		$('#canvas').width(canvasWidth*1.1);
 	}
+
+	if(pos_y >= canvasHeight * 0.87) { //現状の付箋幅がcanvas幅の約13%
+		console.log('over!!');
+		$('#canvas-wrap').width(canvasHeight*1.1);
+		$('#canvas').width(canvasHeight*1.1);
+	}
+
+	ds_canvas.push({
+		canvasWidth: canvasWidth,  	
+		canvasHeight: canvasHeight
+	});
 
 	// 連続入力がONの時に入力を繰り返す
 	if(checkCount == 1){
 		pos_x = pos_x + 20;
 		createFusen(roomID,pos_x,pos_y);
-//		pos_y = pos_y + 20;
 	}
 
 }
 
-// 読み込み時の再描画関数
-function redrawFusen(id,input,pos_x,pos_y){
+
+function createImage (roomID,pos_x,pos_y) {
+
+	ds_image.push({
+            'x' : pos_x + 'px',
+            'y' : pos_y+ 'px',
+            'width': 150,
+            'height': 150,
+            'roomID' : roomID
+  });
+
+}
+
+// 付箋の描画
+function drawFusen(id,input,pos_x,pos_y){
 
 	// 連続入力がONのとき１，OFFのとき0を返す
 	var checkCount = $(':radio[name="conInput"]:checked').length;
@@ -314,6 +325,8 @@ function redrawFusen(id,input,pos_x,pos_y){
 	cross_element.id = id +"_cross";
 	cross_element.className = 'cross';
 	cross_element.innerHTML = '☓';
+	cross_element.style.top = '4px';
+	cross_element.style.left = '125px';
 
 	// ☓ボタンをクリックした場合の操作
 	cross_element.onclick = function(){
@@ -323,14 +336,13 @@ function redrawFusen(id,input,pos_x,pos_y){
 			return false;
 		}else{
 			// OK時
-		
+
 			// var num = this.id.match(/\d/g).join("");
 			// document.getElementById(num+"_fusen").style.visibility="hidden"; //visibilityを使う方法
 			//document.getElementById(num+"_fusen").style.display="none"; //displayを使う方法			
 			//$(this).parent().remove(); //remove使う方法
 
-			// pushされたときに付加されたid（_crossより前の文字列）を切り取る
-			
+			// pushされたときに付加されたid（_crossより前の文字列）を切り取る			
 			a = this.parentNode.style.left; // 付箋のx座標
 			b = this.parentNode.style.top; // 付箋のy座標
 
@@ -342,49 +354,270 @@ function redrawFusen(id,input,pos_x,pos_y){
 			ds.remove(_id);
 		}
 	}
-	
+			
 	// canvas-wrapの子要素（canvasの下の位置）にdivを挿入する
-
 	$('#canvas-wrap').append($(element).append(cross_element));
 
 	// 付箋のドラッグに関する設定部分
 	// http://stacktrace.jp/jquery/ui/interaction/draggable.html
-
-	$('.group').draggable();
+	$('.group').draggable({
+		containment: "#canvas",
+    revert: false //ドラッグ後初期位置に戻さない
+	});
 
 	$(".fusen").draggable({
-
-  	containment: "#canvas",
+		containment: "#canvas",
     // opacity: 0.3,
     revert: false,
-        
+
     // ドラッグ開始時
     start: function(event, ui){
       idName = ui.helper[0].id; // ◯◯ + _fusen の文字列
 			_id = idName.substring(0, idName.indexOf("_") ); //_fusenを取り除いた文字列
-      innerText = ui.helper[0].firstChild.data;
-      ds.send({
-      	'content': innerText,
-      	'idName': idName,
-      	'message':'moving'
-      });
-    },
-    drag : function(event){
-		 	if(flag==1){
-		 		flag=0;
-		 		intervalID=setInterval(scroll_sc(event),7000);
-		 	}
-	 	},
-    stop: function(event, ui) {
+			innerText = ui.helper[0].firstChild.data;
+			ds.send({
+				'content': innerText,
+				'idName': idName,
+				'message':'moving'
+			});
+		},
+		drag : function(event){
+			if(flag==1){
+				flag=0;
+				intervalID=setInterval(scroll_sc(event),7000);
+			}
+		},
+		stop: function(event, ui) {
     	idName = ui.helper[0].id; // ◯◯ + _fusen の文字列
 			_id = idName.substring(0, idName.indexOf("_") ); //_fusenを取り除いた文字列
-      zahyo = $(this).position();
-      innerText = ui.helper[0].firstChild.data;
-      moveFusen(_id, innerText, zahyo);
-    
-    }
-    	
+			zahyo = $(this).position();
+			innerText = ui.helper[0].firstChild.data;
+			moveFusen(_id, innerText, zahyo);
+
+		}
+
+	});
+
+}
+
+function drawImg(id,pos_x,pos_y,f_width,f_height){
+
+	var element = document.createElement('div');
+	element.id = id +"_imagewrap";
+	element.className = "axis";
+	element.width = f_width;
+	element.height = f_height;
+	element.style.left = pos_x;
+	element.style.top = pos_y;
+
+	var axisImg = document.createElement('img');
+	$(axisImg).attr({
+		'src': '/image/jiku.png',
+		'id': id + '_image',
+		'width': f_width,
+		'height': f_height
+	});
+
+	// 削除ボタン(☓ボタン)のdiv要素の作成
+	var cross_element = document.createElement('div');
+	cross_element.id = id +"_cross";
+	cross_element.className = 'cross';
+	cross_element.innerHTML = '☓';
+
+	var cross_left = f_width -25;
+	cross_element.style.top = '4px';
+		cross_element.style.left = cross_left + 'px';
+
+	cross_element.addEventListener('click', imgcrossClick, false);
+
+	function imgcrossClick () {
+		if(!confirm('削除してよろしいですか？')){
+			// キャンセル時
+			return false;
+		}else{
+			// OK時
+			idName = this.id; // ◯◯ + _fusen の文字列
+			// pushされたときに付加されたid（_crossより前の文字列）を抽出
+			_id = idName.substring(0, idName.indexOf("_") ); //_fusenを取り除いた文字列
+			// データストアから削除する
+			ds_image.remove(_id);
+		}
+	}
+
+
+	var plus_element = document.createElement('div');
+	plus_element.id = id +"_plus";
+	plus_element.className = 'plus';
+	plus_element.innerHTML = '+';
+
+	var minus_element = document.createElement('div');
+	minus_element.id = id +"_minus";
+	minus_element.className = 'minus';
+	minus_element.innerHTML = '-';
+
+	// +ボタンをクリックした場合の操作
+
+	plus_element.addEventListener('click', plusClick, false);
+	minus_element.addEventListener('click', minusClick,false);
+
+	$('#canvas-wrap').append($(element).append(axisImg).append(cross_element).append(plus_element).append(minus_element));
+
+	setDragOption();
+
+
+	function plusClick () {
+
+		idName = this.id;
+		_id = idName.substring(0, idName.indexOf("_") );
+
+		var box = document.getElementById(_id + "_imagewrap");
+		var box_1 = document.defaultView.getComputedStyle(box, null);
+		var w = parseInt(box_1.getPropertyValue("width"));
+		var h = parseInt(box_1.getPropertyValue("height"));
+
+		console.log(w,h);
+
+		w = w + 10;
+		h = h + 10;
+
+		box.style.width = w+"px";
+		box.style.height = h+"px";
+
+		var box2 = document.getElementById(_id+"_image");
+		console.log(box2);
+		box2.width = box2.width + 10;
+		box2.height = box2.height + 10;
+
+		var box3 = document.getElementById(_id+"_cross");
+		var box3_1 = document.defaultView.getComputedStyle(box3, null);
+		var l = parseInt(box3_1.getPropertyValue("left"));
+		l = l + 10;
+		box3.style.left = l +"px";
+
+		console.log(w);
+		console.log(h);
+		ds_image.set(_id,{
+            'width' : w,
+            'height': h
+    	});
+
+	}
+
+
+
+	// ☓ボタンをクリックした場合の操作
+	function minusClick(){
+		console.log(this.id);
+		idName = this.id;
+		_id = idName.substring(0, idName.indexOf("_") );
+
+		console.log(_id);
+		var box = document.getElementById(_id + "_imagewrap");
+		var box_1 = document.defaultView.getComputedStyle(box, null);
+		var w = parseInt(box_1.getPropertyValue("width"));
+		var h = parseInt(box_1.getPropertyValue("height"));
+
+		if(w>=150){
+			w = w - 10;
+			h = h - 10;
+			box.style.width = w+"px";
+			box.style.height = h+"px";
+		}
+
+		var box2 = document.getElementById(_id+"_image");
+		console.log(box2);
+		if(box2.width>=150){
+			box2.width = box2.width - 10;
+			box2.height = box2.height - 10;
+		}
+
+		var box3 = document.getElementById(_id+"_cross");
+		var box3_1 = document.defaultView.getComputedStyle(box3, null);
+		var l = parseInt(box3_1.getPropertyValue("left"));
+		if(l>=125){
+			l = l - 10;
+			box3.style.left = l +"px";
+		}
+
+		ds_image.set(_id,{
+			'width' : w,
+			'height': h
+		});
+
+
+	}
+	// canvas-wrapの子要素（canvasの下の位置）にdivを挿入する
+}
+
+function setDragOption () {
+
+	$('.axis').draggable({
+		containment: "#canvas",
+    // opacity: 0.3,
+    revert: false,
+		
+		start: function(event, ui){
+      idName = ui.helper[0].id; // ◯◯ + _fusen の文字列
+			_id = idName.substring(0, idName.indexOf("_") ); //_fusenを取り除いた文字列
+
+			ds_image.send({
+				//				'content': innerText,
+				'idName': idName,
+				'message':'moving'
+			});
+		},
+		drag : function(event){
+			if(flag==1){
+				flag=0;
+				intervalID=setInterval(scroll_sc(event),7000);
+			}
+		},
+
+		stop: function(event, ui) {
+			console.log("Dropped!!");
+			idName = ui.helper[0].id; // ◯◯ + _fusen の文字列
+			_id = idName.substring(0, idName.indexOf("_") ); //_fusenを取り除いた文字列
+			zahyo = $(this).position();
+			moveImage(_id,zahyo);
+		}
+
   });
+
+	$(".fusen").draggable({
+		containment: "#canvas",
+    // opacity: 0.3,
+    revert: false,
+
+    start: function(event, ui){
+        	idName = ui.helper[0].id; // ◯◯ + _fusen の文字列
+			_id = idName.substring(0, idName.indexOf("_") ); //_fusenを取り除いた文字列
+			innerText = ui.helper[0].firstChild.data;
+
+			ds.send({
+				'content': innerText,
+				'idName': idName,
+				message:'moving'
+			});
+		},
+		drag : function(event){
+			if(flag==1){
+				flag=0;
+				intervalID=setInterval(scroll_sc(event),7000);
+			}
+		},
+
+		stop: function(event, ui) {
+			console.log("Dropped!!");
+
+      	    idName = ui.helper[0].id; // ◯◯ + _fusen の文字列
+			_id = idName.substring(0, idName.indexOf("_") ); //_fusenを取り除いた文字列
+			zahyo = $(this).position();
+			innerText = ui.helper[0].firstChild.data;
+			console.log(_id);
+			moveFusen(_id, innerText, zahyo)
+		}
+
+	});	
 
 }
 
@@ -414,6 +647,15 @@ function scroll_sc(event){
 		}
 		
 		document.getElementById('touchState').textContent = 'moving';
+
+}
+
+function moveImage(id,zahyo){
+
+	ds_image.set(id, {
+		'x' : zahyo.left + 'px',
+		'y' : zahyo.top + 'px'
+	});
 
 }
 
